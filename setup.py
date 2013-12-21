@@ -18,7 +18,7 @@ readme = open('README.rst').read()
 history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 
 setup(
-    name='djangorestframework_camel_case',
+    name='djangorestframework-camel-case',
     version='0.1.0',
     description='Camel case JSON support for Django REST framework.',
     long_description=readme + '\n\n' + history,
