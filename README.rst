@@ -20,7 +20,7 @@ Installation
 
 At the command line::
 
-    $ pip djangorestframework-camel-case
+    $ pip install djangorestframework-camel-case
 
 Add the render and parser to your django settings file.
 
