@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
-from rest_framework.compat import six
-from rest_framework.exceptions import ParseError
-from rest_framework.parsers import JSONParser
+from rest_framework.parsers import JSONParser, ParseError, six
 from django.conf import settings
 import re
 import json
@@ -27,6 +25,7 @@ def underscoreize(data):
     return data
 
 class CamelCaseJSONParser(JSONParser):
+
     def parse(self, stream, media_type=None, parser_context=None):
         parser_context = parser_context or {}
         encoding = parser_context.get('encoding', settings.DEFAULT_CHARSET)
