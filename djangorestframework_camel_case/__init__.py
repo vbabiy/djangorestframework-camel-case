@@ -5,5 +5,5 @@ __author__ = 'Vitaly Babiy'
 __email__ = 'vbabiy86@gmail.com'
 __version__ = '0.1.3'
 
-from render import CamelCaseJSONRenderer
-from parser import CamelCaseJSONParser
+from .render import CamelCaseJSONRenderer
+from .parser import CamelCaseJSONParser
