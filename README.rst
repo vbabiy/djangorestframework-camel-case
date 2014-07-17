@@ -28,15 +28,25 @@ Add the render and parser to your django settings file.
     REST_FRAMEWORK = {
 
         'DEFAULT_RENDERER_CLASSES': (
-            'djangorestframework_camel_case.CamelCaseJSONRenderer',
+            'djangorestframework_camel_case.render.CamelCaseJSONRenderer',
             # Any other renders
         ),
 
         'DEFAULT_PARSER_CLASSES': (
-            'djangorestframework_camel_case.CamelCaseJSONParser',
+            'djangorestframework_camel_case.parser.CamelCaseJSONParser',
             # Any other parsers
         ),
     }
     # ...
+
+=============
+Running Tests
+=============
+
+To run the current test suite, execute the following from the root of he project::
+
+    $ python -m unittest discover
+
+
 
 * Free software: BSD license
