@@ -1,1 +1,2 @@
 djangorestframework>=2.0.0
+inflection>=0.2.1
