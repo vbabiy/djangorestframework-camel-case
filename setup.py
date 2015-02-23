@@ -24,7 +24,7 @@ setup(
     long_description=readme + '\n\n' + history,
     author='Vitaly Babiy',
     author_email='vbabiy86@gmail.com',
-    url='https://github.com/vbabiy/djangorestframework_camel_case',
+    url='https://github.com/vbabiy/djangorestframework-camel-case',
     packages=[
         'djangorestframework_camel_case',
     ],
