@@ -13,7 +13,7 @@ def camelize(data):
     if isinstance(data, dict):
         new_dict = OrderedDict()
         for key, value in data.items():
-            new_key = re.sub(r"[a-z]_[a-z]", underscoreToCamel, key)
+            new_key = re.sub(r"[a-z0-9]_[a-z]", underscoreToCamel, key)
             new_dict[new_key] = camelize(value)
         return new_dict
     if isinstance(data, (list, tuple)):
