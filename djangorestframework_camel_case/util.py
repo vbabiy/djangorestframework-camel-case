@@ -1,6 +1,8 @@
 from collections import OrderedDict
 import re
 
+from django.db.models import QuerySet
+
 first_cap_re = re.compile('(.)([A-Z][a-z]+)')
 all_cap_re = re.compile('([a-z0-9])([A-Z])')
 
@@ -20,6 +22,11 @@ def camelize(data):
         for i in range(len(data)):
             data[i] = camelize(data[i])
         return data
+    if isinstance(data, QuerySet):
+        new_list = []
+        for i in range(len(data)):
+            new_list.append(camelize(data[i]))
+        return new_list
     return data
 
 
