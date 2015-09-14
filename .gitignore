@@ -1,3 +1,6 @@
+# Hidden files
+.*
+
 *.py[cod]
 
 # C extensions

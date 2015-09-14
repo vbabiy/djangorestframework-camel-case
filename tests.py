@@ -22,7 +22,7 @@ class UnderscoreToCamelTestCase(TestCase):
             "multiple_values" : (1, 2)
         }
         output = {
-            "multipleValues": (1, 2)
+            "multipleValues": [1, 2]
         }
         self.assertEqual(camelize(input), output)
 
