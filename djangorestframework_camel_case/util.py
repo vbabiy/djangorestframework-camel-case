@@ -24,7 +24,7 @@ def camelize(data):
         camelized_data = []
         for i in range(len(data)):
             camelized_data.append(camelize(data[i]))
-        return tuple(camelized_data)
+        return camelized_data
     return data
 
 
