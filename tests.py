@@ -7,6 +7,7 @@ from djangorestframework_camel_case.util import camelize, underscoreize
 
 
 class UnderscoreToCamelTestCase(TestCase):
+
     def test_under_to_camel(self):
         input = {
             "title_display": 1
@@ -16,6 +17,14 @@ class UnderscoreToCamelTestCase(TestCase):
         }
         self.assertEqual(camelize(input), output)
 
+    def test_tuples(self):
+        input = {
+            "multiple_values" : (1, 2)
+        }
+        output = {
+            "multipleValues": (1, 2)
+        }
+        self.assertEqual(camelize(input), output)
 
 class CamelToUnderscoreTestCase(TestCase):
     def test_under_to_camel(self):

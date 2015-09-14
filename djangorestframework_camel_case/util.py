@@ -16,10 +16,15 @@ def camelize(data):
             new_key = re.sub(r"[a-z]_[a-z]", underscoreToCamel, key)
             new_dict[new_key] = camelize(value)
         return new_dict
-    if isinstance(data, (list, tuple)):
+    if isinstance(data, list):
         for i in range(len(data)):
             data[i] = camelize(data[i])
         return data
+    if isinstance(data, tuple):
+        camelized_data = []
+        for i in range(len(data)):
+            camelized_data.append(camelize(data[i]))
+        return tuple(camelized_data)
     return data
 
 
