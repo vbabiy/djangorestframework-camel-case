@@ -30,9 +30,9 @@ class UnderscoreToCamelTestCase(TestCase):
         self.assertIsNot(result, input, "should not change original list")
 
     def test_under_to_camel_tuple(self):
-        input = ( 
+        input = (
             {"title_display": 1},
-        ) 
+        )
         output = (
             {"titleDisplay": 1},
         )
