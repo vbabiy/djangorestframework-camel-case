@@ -17,9 +17,8 @@ def camelize(data):
             new_dict[new_key] = camelize(value)
         return new_dict
     if isinstance(data, (list, tuple)):
-        for i in range(len(data)):
-            data[i] = camelize(data[i])
-        return data
+        data_type = type(data)
+        return data_type(map(camelize, data))
     return data
 
 
@@ -36,7 +35,6 @@ def underscoreize(data):
             new_dict[new_key] = underscoreize(value)
         return new_dict
     if isinstance(data, (list, tuple)):
-        for i in range(len(data)):
-            data[i] = underscoreize(data[i])
-        return data
+        data_type = type(data)
+        return data_type(map(underscoreize, data))
     return data
