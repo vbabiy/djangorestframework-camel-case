@@ -16,9 +16,12 @@ def camelize(data):
             new_key = re.sub(r"[a-z]_[a-z]", underscoreToCamel, key)
             new_dict[new_key] = camelize(value)
         return new_dict
-    if isinstance(data, (list, tuple)):
-        data_type = type(data)
-        return data_type(map(camelize, data))
+    if isinstance(data, list):
+        for i in range(len(data)):
+            data[i] = camelize(data[i])
+        return data
+    if isinstance(data, tuple):
+        return tuple(map(camelize, data))
     return data
 
 
@@ -34,7 +37,10 @@ def underscoreize(data):
             new_key = camel_to_underscore(key)
             new_dict[new_key] = underscoreize(value)
         return new_dict
-    if isinstance(data, (list, tuple)):
-        data_type = type(data)
-        return data_type(map(underscoreize, data))
+    if isinstance(data, list):
+        for i in range(len(data)):
+            data[i] = underscoreize(data[i])
+        return data
+    if isinstance(data, tuple):
+        return tuple(map(underscoreize, data))
     return data
