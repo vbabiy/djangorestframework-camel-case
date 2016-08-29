@@ -9,7 +9,7 @@ Django REST Framework JSON CamelCase
         :target: https://travis-ci.org/vbabiy/djangorestframework-camel-case
 
 .. image:: https://pypip.in/d/djangorestframework-camel-case/badge.png
-        :target: https://crate.io/packages/djangorestframework-camel-case?version=latest
+        :target: https://img.shields.io/pypi/v/djangorestframework-camel-case.svg
 
 
 Camel case JSON support for Django REST framework.
