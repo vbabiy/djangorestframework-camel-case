@@ -1,7 +1,7 @@
 from collections import OrderedDict
 import re
 
-first_cap_re = re.compile('(.)([A-Z][a-z]+)')
+first_cap_re = re.compile('(.)([A-Z0-9][a-z]+)')
 all_cap_re = re.compile('([a-z0-9])([A-Z])')
 
 
@@ -13,7 +13,7 @@ def camelize(data):
     if isinstance(data, dict):
         new_dict = OrderedDict()
         for key, value in data.items():
-            new_key = re.sub(r"[a-z]_[a-z]", underscoreToCamel, key)
+            new_key = re.sub(r"[a-z]_[a-z0-9]", underscoreToCamel, key)
             new_dict[new_key] = camelize(value)
         return new_dict
     if isinstance(data, (list, tuple)):
