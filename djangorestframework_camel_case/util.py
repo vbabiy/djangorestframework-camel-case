@@ -1,7 +1,7 @@
 from collections import OrderedDict
 import re
 
-first_cap_re = re.compile('(.)([A-Z0-9][a-z]+)')
+first_cap_re = re.compile('(.)([A-Z]|[0-9]+)')
 all_cap_re = re.compile('([a-z0-9])([A-Z])')
 
 
