@@ -24,7 +24,7 @@ At the command line::
 
 Add the render and parser to your django settings file.
 
-.. sourcecode:: python
+.. code-block:: python
 
     # ...
     REST_FRAMEWORK = {
