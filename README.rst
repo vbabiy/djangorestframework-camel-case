@@ -42,8 +42,8 @@ Add the render and parser to your django settings file.
     # ...
 
 By default the package uses `rest_framework.renderers.JSONRenderer`. If you want
-to use another renderer (the only possible alternative is
-`rest_framework.renderers.JSONRenderer`), you must specify it in your django 
+to use another renderer (the only possible alternative at the moment is
+`rest_framework.renderers.UnicodeJSONRenderer`), you must specify it in your django
 settings file.
 
     # ...
