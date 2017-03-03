@@ -24,6 +24,8 @@ At the command line::
 
 Add the render and parser to your django settings file.
 
+.. code-block:: python
+
     # ...
     REST_FRAMEWORK = {
 
@@ -58,6 +60,9 @@ To run the current test suite, execute the following from the root of he project
 
     $ python -m unittest discover
 
+=============
+License
+=============
 
 
-* Free software: BSD license
+Free software: BSD license
