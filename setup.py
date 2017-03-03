@@ -28,7 +28,9 @@ setup(
     packages=[
         'djangorestframework_camel_case',
     ],
-    package_dir={'djangorestframework_camel_case': 'djangorestframework_camel_case'},
+    package_dir={
+        'djangorestframework_camel_case': 'djangorestframework_camel_case'
+    },
     include_package_data=True,
     install_requires=[
     ],

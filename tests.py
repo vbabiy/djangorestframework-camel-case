@@ -56,12 +56,13 @@ class UnderscoreToCamelTestCase(TestCase):
 
     def test_tuples(self):
         input = {
-            "multiple_values" : (1, 2)
+            "multiple_values": (1, 2)
         }
         output = {
             "multipleValues": (1, 2)
         }
         self.assertEqual(camelize(input), output)
+
 
 class CamelToUnderscoreTestCase(TestCase):
     def test_camel_to_under_dict(self):

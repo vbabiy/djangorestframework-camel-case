@@ -29,11 +29,13 @@ VALID_SETTINGS = {
     )
 }
 
+
 def validate_settings(input_settings, valid_settings):
     for setting_name, valid_values in valid_settings.iteritems():
         input_setting = input_settings.get(setting_name)
         if input_setting and input_setting not in valid_values:
             raise ImproperlyConfigured(setting_name)
+
 
 validate_settings(USER_SETTINGS, VALID_SETTINGS)
 
