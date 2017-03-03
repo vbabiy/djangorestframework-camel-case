@@ -3,7 +3,7 @@ import re
 from collections import OrderedDict
 
 
-def camelize_key(string, uppercase_first_letter=True):
+def camelize_key(key, uppercase_first_letter=True):
     """
     From: https://github.com/jpvanhal/inflection
 
@@ -21,13 +21,18 @@ def camelize_key(string, uppercase_first_letter=True):
         strings to UpperCamelCase. If set to `False` :func:`camelize` produces
         lowerCamelCase. Defaults to `True`.
     """
+
+    if type(key) is int:
+        # Could be an integer (Field.choices, for example): { 1: "foo" }
+        key = str(key)
+
     if uppercase_first_letter:
-        return re.sub(r"(?:^|_)(.)", lambda m: m.group(1).upper(), string)
+        return re.sub(r"(?:^|_)(.)", lambda m: m.group(1).upper(), key)
     else:
-        return string[0].lower() + camelize_key(string)[1:]
+        return key[0].lower() + camelize_key(key)[1:]
 
 
-def underscore_key(string):
+def underscore_key(key):
     """
     From: https://github.com/jpvanhal/inflection
 
@@ -40,10 +45,14 @@ def underscore_key(string):
         >>> camelize(underscore("IOError"))
         "IoError"
     """
-    string = re.sub(r"([A-Z]+)([A-Z][a-z])", r'\1_\2', string)
-    string = re.sub(r"([a-z\d])([A-Z])", r'\1_\2', string)
-    string = string.replace("-", "_")
-    return string.lower()
+
+    if type(key) is int:
+        key = str(key)
+
+    key = re.sub(r"([A-Z]+)([A-Z][a-z])", r'\1_\2', key)
+    key = re.sub(r"([a-z\d])([A-Z])", r'\1_\2', key)
+    key = key.replace("-", "_")
+    return key.lower()
 
 
 def camelize(data):

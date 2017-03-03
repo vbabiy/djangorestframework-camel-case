@@ -63,6 +63,15 @@ class UnderscoreToCamelTestCase(TestCase):
         }
         self.assertEqual(camelize(input), output)
 
+    def test_integer_key(self):
+        input = {
+            1: 1
+        }
+        output = {
+            "1": 1
+        }
+        self.assertEqual(camelize(input), output)
+
 
 class CamelToUnderscoreTestCase(TestCase):
     def test_camel_to_under_dict(self):
@@ -110,6 +119,16 @@ class CamelToUnderscoreTestCase(TestCase):
             "a_tuple": ("one_two", 3)
         }
         self.assertEqual(underscoreize(input), output)
+
+    def test_integer_key(self):
+        input = [
+            {1: 1}
+        ]
+        output = [
+            {"1": 1}
+        ]
+        result = underscoreize(input)
+        self.assertEqual(result, output)
 
 
 class CompatibilityTest(TestCase):
