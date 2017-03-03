@@ -8,7 +8,7 @@ Django REST Framework JSON CamelCase
 .. image:: https://travis-ci.org/vbabiy/djangorestframework-camel-case.png?branch=master
         :target: https://travis-ci.org/vbabiy/djangorestframework-camel-case
 
-.. image:: https://pypip.in/d/djangorestframework-camel-case/badge.png
+.. image:: https://img.shields.io/pypi/v/djangorestframework-camel-case.svg
         :target: https://img.shields.io/pypi/v/djangorestframework-camel-case.svg
 
 
