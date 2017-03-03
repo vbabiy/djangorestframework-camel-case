@@ -7,12 +7,8 @@ from djangorestframework_camel_case.util import camelize, underscoreize
 
 
 class UnderscoreToCamelTestCase(TestCase):
-<<<<<<< HEAD
 
-    def test_under_to_camel(self):
-=======
     def test_under_to_camel_dict(self):
->>>>>>> 28000e9d5be3b5de4e410ba773db8d4237a33ca5
         input = {
             "title_display": 1
         }
