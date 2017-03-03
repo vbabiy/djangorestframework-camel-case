@@ -2,22 +2,20 @@
 
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
-
 from rest_framework.settings import APISettings
 
-
-USER_SETTINGS = getattr(settings, 'JSON_CAMEL_CASE', None)
-
-DEFAULTS = {
-    'RENDERER_CLASS': 'rest_framework.renderers.JSONRenderer',
-    'PARSER_CLASS': 'rest_framework.parsers.JSONParser'
-}
+_rest_framework_settings = getattr(settings, 'REST_FRAMEWORK', None)
 
 # List of settings that may be in string import notation.
 IMPORT_STRINGS = (
     'RENDERER_CLASS',
     'PARSER_CLASS'
 )
+
+DEFAULTS = {
+    'RENDERER_CLASS': 'rest_framework.renderers.JSONRenderer',
+    'PARSER_CLASS': 'rest_framework.parsers.JSONParser'
+}
 
 VALID_SETTINGS = {
     'RENDERER_CLASS': (
@@ -37,6 +35,8 @@ def validate_settings(input_settings, valid_settings):
             raise ImproperlyConfigured(setting_name)
 
 
-validate_settings(USER_SETTINGS, VALID_SETTINGS)
+validate_settings(_rest_framework_settings, VALID_SETTINGS)
 
-api_settings = APISettings(USER_SETTINGS, DEFAULTS, IMPORT_STRINGS)
+rest_framework_settings = APISettings(
+    _rest_framework_settings, DEFAULTS, IMPORT_STRINGS
+)
