@@ -20,7 +20,7 @@ class UnderscoreToCamelTestCase(TestCase):
     def test_under_to_camel_input_untouched_for_sequence(self):
         input = [
             {'first_input': 1},
-            {'input_second': 2},
+            {'second_input': 2},
         ]
         reference_input = deepcopy(input)
         camelize(input)
@@ -40,7 +40,7 @@ class CamelToUnderscoreTestCase(TestCase):
     def test_camel_to_under_input_untouched_for_sequence(self):
         input = [
             {'firstInput': 1},
-            {'inputSecond': 2},
+            {'secondInput': 2},
         ]
         reference_input = deepcopy(input)
         camelize(input)
