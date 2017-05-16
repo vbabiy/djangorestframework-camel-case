@@ -17,10 +17,7 @@ def camelize(data):
             new_dict[new_key] = camelize(value)
         return new_dict
     if isinstance(data, (list, tuple)):
-        new_sequence = []
-        for i in range(len(data)):
-            new_sequence.append(camelize(data[i]))
-        return new_sequence
+        return [camelize(item) for item in data]
     return data
 
 
@@ -37,8 +34,5 @@ def underscoreize(data):
             new_dict[new_key] = underscoreize(value)
         return new_dict
     if isinstance(data, (list, tuple)):
-        new_sequence = []
-        for i in range(len(data)):
-            new_sequence[i].append(underscoreize(data[i]))
-        return new_sequence
+        return [underscoreize(item) for item in data]
     return data
