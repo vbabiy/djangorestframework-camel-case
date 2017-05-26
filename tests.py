@@ -3,7 +3,7 @@
 
 from unittest.case import TestCase
 
-from djangorestframework_camel_case.util import camelize, underscoreize
+from djangorestframework_camel_case.util import camelize, underscorize
 
 
 class UnderscoreToCamelTestCase(TestCase):
@@ -81,7 +81,7 @@ class CamelToUnderscoreTestCase(TestCase):
         output = {
             "title_display": 1
         }
-        result = underscoreize(input)
+        result = underscorize(input)
         self.assertEqual(result, output)
         self.assertIsNot(result, input, "should not change original dict")
 
@@ -92,7 +92,7 @@ class CamelToUnderscoreTestCase(TestCase):
         output = [
             {"title_display": 1}
         ]
-        result = underscoreize(input)
+        result = underscorize(input)
         self.assertEqual(result, output)
         self.assertIsNot(result, input, "should not change original list")
 
@@ -103,7 +103,7 @@ class CamelToUnderscoreTestCase(TestCase):
         output = [
             {"title_display": 1}
         ]
-        result = underscoreize(input)
+        result = underscorize(input)
         self.assertEqual(result, output)
         self.assertIsNot(result, input, "should not change original tuple")
 
@@ -118,7 +118,7 @@ class CamelToUnderscoreTestCase(TestCase):
             "a_list": [1, "two_three", {"three_four": 5}],
             "a_tuple": ("one_two", 3)
         }
-        self.assertEqual(underscoreize(input), output)
+        self.assertEqual(underscorize(input), output)
 
     def test_integer_key(self):
         input = [
@@ -127,7 +127,7 @@ class CamelToUnderscoreTestCase(TestCase):
         output = [
             {"1": 1}
         ]
-        result = underscoreize(input)
+        result = underscorize(input)
         self.assertEqual(result, output)
 
 
@@ -138,4 +138,4 @@ class CompatibilityTest(TestCase):
             "a_list": [1, "two_three", {"three_four": 5}],
             "a_tuple": ("one_two", 3)
         }
-        self.assertEqual(underscoreize(camelize(input)), input)
+        self.assertEqual(underscorize(camelize(input)), input)
