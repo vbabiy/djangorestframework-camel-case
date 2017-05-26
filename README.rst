@@ -1,15 +1,15 @@
-===============================
+====================================
 Django REST Framework JSON CamelCase
-===============================
+====================================
 
 .. image:: https://badge.fury.io/py/djangorestframework-camel-case.png
     :target: http://badge.fury.io/py/djangorestframework-camel-case
     
 .. image:: https://travis-ci.org/vbabiy/djangorestframework-camel-case.png?branch=master
-        :target: https://travis-ci.org/vbabiy/djangorestframework-camel-case
+    :target: https://travis-ci.org/vbabiy/djangorestframework-camel-case
 
-.. image:: https://pypip.in/d/djangorestframework-camel-case/badge.png
-        :target: https://crate.io/packages/djangorestframework-camel-case?version=latest
+.. image:: https://img.shields.io/pypi/v/djangorestframework-camel-case.svg
+    :target: https://img.shields.io/pypi/v/djangorestframework-camel-case.svg
 
 
 Camel case JSON support for Django REST framework.
@@ -23,6 +23,8 @@ At the command line::
     $ pip install djangorestframework-camel-case
 
 Add the render and parser to your django settings file.
+
+.. code-block:: python
 
     # ...
     REST_FRAMEWORK = {
@@ -47,6 +49,9 @@ To run the current test suite, execute the following from the root of he project
 
     $ python -m unittest discover
 
+=======
+License
+=======
 
 
 * Free software: BSD license
