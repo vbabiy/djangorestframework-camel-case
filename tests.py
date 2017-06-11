@@ -34,3 +34,8 @@ class CompatibilityTest(TestCase):
             "title_245a_display": 1
         }
         self.assertEqual(underscoreize(camelize(input)), input)
+
+class NonStringKeyTest(TestCase):
+    def test_non_string_key(self):
+        input = {1: "test"}
+        self.assertEqual(underscoreize(camelize(input)), input)
