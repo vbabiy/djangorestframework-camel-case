@@ -1,7 +1,7 @@
 import re
-import sys
-PY_VERISON = sys.version_info[0]
 from collections import OrderedDict
+
+from django.utils import six
 
 first_cap_re = re.compile('(.)([A-Z][a-z]+)')
 all_cap_re = re.compile('([a-z0-9])([A-Z])')
@@ -15,7 +15,7 @@ def camelize(data):
     if isinstance(data, dict):
         new_dict = OrderedDict()
         for key, value in data.items():
-            if isinstance(key, (str if PY_VERISON >= 3 else basestring)):
+            if isinstance(key, six.string_types):
                 new_key = re.sub(r"[a-z0-9]_[a-z]", underscore_to_camel, key)
             else:
                 new_key = key
