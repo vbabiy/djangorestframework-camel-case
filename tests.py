@@ -16,6 +16,15 @@ class UnderscoreToCamelTestCase(TestCase):
         }
         self.assertEqual(camelize(data), output)
 
+    def test_digit_as_part_of_name(self):
+        data = {
+            "title1_display": 1
+        }
+        output = {
+            "title1Display": 1
+        }
+        self.assertEqual(camelize(data), output)
+
 
 class CamelToUnderscoreTestCase(TestCase):
     def test_under_to_camel(self):
@@ -24,6 +33,16 @@ class CamelToUnderscoreTestCase(TestCase):
         }
         output = {
             "title_display": 1
+        }
+        self.assertEqual(underscoreize(data), output)
+
+
+    def test_digit_as_part_of_name(self):
+        data = {
+            "title1Display": 1
+        }
+        output = {
+            "title1_display": 1
         }
         self.assertEqual(underscoreize(data), output)
 
