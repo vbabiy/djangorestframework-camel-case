@@ -1,13 +1,13 @@
-from collections import OrderedDict
 import re
 import sys
 PY_VERISON = sys.version_info[0]
+from collections import OrderedDict
 
 first_cap_re = re.compile('(.)([A-Z][a-z]+)')
 all_cap_re = re.compile('([a-z0-9])([A-Z])')
 
 
-def underscoreToCamel(match):
+def underscore_to_camel(match):
     return match.group()[0] + match.group()[2].upper()
 
 
@@ -16,7 +16,7 @@ def camelize(data):
         new_dict = OrderedDict()
         for key, value in data.items():
             if isinstance(key, (str if PY_VERISON >= 3 else basestring)):
-                new_key = re.sub(r"[a-z]_[a-z]", underscoreToCamel, key)
+                new_key = re.sub(r"[a-z0-9]_[a-z]", underscore_to_camel, key)
             else:
                 new_key = key
             new_dict[new_key] = camelize(value)
