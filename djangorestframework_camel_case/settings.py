@@ -5,7 +5,6 @@ from django.core.exceptions import ImproperlyConfigured
 
 from rest_framework.settings import APISettings
 
-
 USER_SETTINGS = getattr(settings, 'JSON_CAMEL_CASE', None)
 
 DEFAULTS = {
@@ -29,11 +28,13 @@ VALID_SETTINGS = {
     )
 }
 
+
 def validate_settings(input_settings, valid_settings):
-    for setting_name, valid_values in valid_settings.iteritems():
+    for setting_name, valid_values in valid_settings.items():
         input_setting = input_settings.get(setting_name)
         if input_setting and input_setting not in valid_values:
             raise ImproperlyConfigured(setting_name)
+
 
 validate_settings(USER_SETTINGS, VALID_SETTINGS)
 
