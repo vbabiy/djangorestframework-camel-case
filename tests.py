@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from unittest import TestCase
 from copy import deepcopy
+from unittest import TestCase
 
 from djangorestframework_camel_case.util import camelize, underscoreize
 
@@ -67,13 +67,13 @@ class CamelToUnderscoreTestCase(TestCase):
         self.assertEqual(underscoreize(data), output)
 
     def test_camel_to_under_input_untouched_for_sequence(self):
-        input = [
+        data = [
             {'firstInput': 1},
             {'secondInput': 2},
         ]
-        reference_input = deepcopy(input)
-        camelize(input)
-        self.assertEqual(input, reference_input)
+        reference_input = deepcopy(data)
+        camelize(data)
+        self.assertEqual(data, reference_input)
 
 
 class CompatibilityTest(TestCase):
