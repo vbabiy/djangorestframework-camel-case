@@ -36,7 +36,6 @@ class CamelToUnderscoreTestCase(TestCase):
         }
         self.assertEqual(underscoreize(data), output)
 
-
     def test_digit_as_part_of_name(self):
         data = {
             "title1Display": 1
@@ -53,6 +52,7 @@ class CompatibilityTest(TestCase):
             "title_245a_display": 1
         }
         self.assertEqual(underscoreize(camelize(data)), data)
+
 
 class NonStringKeyTest(TestCase):
     def test_non_string_key(self):
