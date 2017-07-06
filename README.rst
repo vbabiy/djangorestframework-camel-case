@@ -1,6 +1,6 @@
-===============================
+====================================
 Django REST Framework JSON CamelCase
-===============================
+====================================
 
 .. image:: https://badge.fury.io/py/djangorestframework-camel-case.png
     :target: http://badge.fury.io/py/djangorestframework-camel-case
@@ -36,6 +36,17 @@ Add the render and parser to your django settings file.
             'djangorestframework_camel_case.parser.CamelCaseJSONParser',
             # Any other parsers
         ),
+    }
+    # ...
+
+By default the package uses `rest_framework.renderers.JSONRenderer`. If you want
+to use another renderer (the only possible alternative is
+`rest_framework.renderers.JSONRenderer`), you must specify it in your django 
+settings file.
+
+    # ...
+    JSON_CAMEL_CASE = {
+        'RENDERER_CLASS': 'rest_framework.renderers.UnicodeJSONRenderer'
     }
     # ...
 
