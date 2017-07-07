@@ -3,8 +3,9 @@ from collections import OrderedDict
 
 from django.utils import six
 
-first_cap_re = re.compile('(.)([A-Z]|[0-9]+)')
-all_cap_re = re.compile('([a-z0-9])([A-Z])')
+first_cap_re = re.compile(r'(.)([A-Z]|[0-9]+)')
+all_cap_re = re.compile(r'([a-z0-9])([A-Z])')
+camelize_re = re.compile(r"[a-z0-9]_[a-z0-9]")
 
 
 def underscore_to_camel(match):
@@ -15,8 +16,8 @@ def camelize(data):
     if isinstance(data, dict):
         new_dict = OrderedDict()
         for key, value in data.items():
-            if isinstance(key, six.string_types):
-                new_key = re.sub(r"[a-z0-9]_[a-z0-9]", underscore_to_camel, key)
+            if isinstance(key, six.string_types) and '_' in key:
+                new_key = re.sub(camelize_re, underscore_to_camel, key)
             else:
                 new_key = key
             new_dict[new_key] = camelize(value)
