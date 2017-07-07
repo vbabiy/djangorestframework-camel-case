@@ -62,7 +62,7 @@ class CamelToUnderscoreTestCase(TestCase):
             "title1Display": 1
         }
         output = {
-            "title1_display": 1
+            "title_1_display": 1
         }
         self.assertEqual(underscoreize(data), output)
 
