@@ -59,7 +59,7 @@ class CamelToUnderscoreTestCase(TestCase):
             "onlyOneLetterA": 4,
             "bOnlyOneLetter": 5,
             "onlyCLetter": 6,
-            "mix123123aAndLetters":7
+            "mix123123aAndLetters": 7,
         }
         output = {
             "two_word": 1,
