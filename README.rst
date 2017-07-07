@@ -46,6 +46,8 @@ to use another renderer (the only possible alternative is
 `rest_framework.renderers.JSONRenderer`), you must specify it in your django
 settings file.
 
+.. code-block:: python
+
     # ...
     JSON_CAMEL_CASE = {
         'RENDERER_CLASS': 'rest_framework.renderers.UnicodeJSONRenderer'
