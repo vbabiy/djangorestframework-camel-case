@@ -61,9 +61,8 @@ To run the current test suite, execute the following from the root of he project
     $ python -m unittest discover
 
 
-=============
+=======
 License
-=============
-
+=======
 
 * Free software: BSD license

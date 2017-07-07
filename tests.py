@@ -38,13 +38,13 @@ class UnderscoreToCamelTestCase(TestCase):
         self.assertEqual(camelize(data), output)
 
     def test_under_to_camel_input_untouched_for_sequence(self):
-        input = [
+        data = [
             {'first_input': 1},
             {'second_input': 2},
         ]
-        reference_input = deepcopy(input)
-        camelize(input)
-        self.assertEqual(input, reference_input)
+        reference_input = deepcopy(data)
+        camelize(data)
+        self.assertEqual(data, reference_input)
 
 
 class CamelToUnderscoreTestCase(TestCase):
