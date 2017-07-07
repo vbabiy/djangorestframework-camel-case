@@ -5,7 +5,7 @@ from django.core.exceptions import ImproperlyConfigured
 
 from rest_framework.settings import APISettings
 
-USER_SETTINGS = getattr(settings, 'JSON_CAMEL_CASE', None)
+USER_SETTINGS = getattr(settings, 'JSON_CAMEL_CASE', {})
 
 DEFAULTS = {
     'RENDERER_CLASS': 'rest_framework.renderers.JSONRenderer',
