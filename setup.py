@@ -16,10 +16,11 @@ if sys.argv[-1] == 'publish':
 
 readme = open('README.rst').read()
 history = open('HISTORY.rst').read().replace('.. :changelog:', '')
+import djangorestframework_camel_case
 
 setup(
     name='djangorestframework-camel-case',
-    version='0.2.0',
+    version=djangorestframework_camel_case.__version__,
     description='Camel case JSON support for Django REST framework.',
     long_description=readme + '\n\n' + history,
     author='Vitaly Babiy',
