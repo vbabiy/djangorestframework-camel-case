@@ -26,7 +26,7 @@ def camelize(data):
                 new_key = key
             new_dict[new_key] = camelize(value)
         return new_dict
-    if isinstance(data, (list, tuple)):
+    if is_iterable(data) and not isinstance(data, six.string_types):
         return [camelize(item) for item in data]
     return data
 
@@ -45,7 +45,16 @@ def underscoreize(data):
                 new_key = key
             new_dict[new_key] = underscoreize(value)
         return new_dict
-    if isinstance(data, (list, tuple)):
+    if is_iterable(data) and not isinstance(data, six.string_types):
         return [underscoreize(item) for item in data]
 
     return data
+
+
+def is_iterable(obj):
+    try:
+        iter(obj)
+    except TypeError:
+        return False
+    else:
+        return True
