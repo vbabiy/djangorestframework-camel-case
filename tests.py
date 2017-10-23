@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
 from copy import deepcopy
 from unittest import TestCase
 
@@ -86,3 +85,29 @@ class NonStringKeyTest(TestCase):
     def test_non_string_key(self):
         data = {1: "test"}
         self.assertEqual(underscoreize(camelize(data)), data)
+
+
+class GeneratorAsInputTestCase(TestCase):
+    def _underscore_generator(self):
+        yield {'simple_is_better': 'than complex'}
+        yield {'that_is': 'correct'}
+
+    def _camel_generator(self):
+        yield {'simpleIsBetter': 'than complex'}
+        yield {'thatIs': 'correct'}
+
+    def test_camelize_iterates_over_generator(self):
+        data = self._underscore_generator()
+        output = [
+            {'simpleIsBetter': 'than complex'},
+            {'thatIs': 'correct'},
+        ]
+        self.assertEqual(camelize(data), output)
+
+    def test_underscoreize_iterates_over_generator(self):
+        data = self._camel_generator()
+        output = [
+            {'simple_is_better': 'than complex'},
+            {'that_is': 'correct'},
+        ]
+        self.assertEqual(underscoreize(data), output)
