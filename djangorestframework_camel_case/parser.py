@@ -15,6 +15,9 @@ class CamelCaseJSONParser(api_settings.PARSER_CLASS):
 
         try:
             data = stream.read().decode(encoding)
-            return underscoreize(json.loads(data))
+            return underscoreize(
+                json.loads(data),
+                **api_settings.JSON_UNDERSCOREIZE
+            )
         except ValueError as exc:
             raise ParseError('JSON parse error - %s' % six.text_type(exc))

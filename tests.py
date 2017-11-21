@@ -16,6 +16,7 @@ class UnderscoreToCamelTestCase(TestCase):
             "b_only_one_letter": 5,
             "only_c_letter": 6,
             "mix_123123a_and_letters": 7,
+            "no_underscore_before123": 8
         }
         output = {
             "twoWord": 1,
@@ -24,7 +25,8 @@ class UnderscoreToCamelTestCase(TestCase):
             "onlyOneLetterA": 4,
             "bOnlyOneLetter": 5,
             "onlyCLetter": 6,
-            "mix123123aAndLetters": 7
+            "mix123123aAndLetters": 7,
+            "noUnderscoreBefore123": 8
         }
         self.assertEqual(camelize(data), output)
 
@@ -70,6 +72,12 @@ class CamelToUnderscoreTestCase(TestCase):
             "mix_123123a_and_letters": 7
         }
         self.assertEqual(underscoreize(data), output)
+
+    def test_camel_to_under_keys_with_no_underscore_before_number(self):
+        data = {'noUnderscoreBefore123': 1}
+        output = {'no_underscore_before123': 1}
+        options = {'no_underscore_before_number': True}
+        self.assertEqual(underscoreize(data, **options), output)
 
     def test_under_to_camel_input_untouched_for_sequence(self):
         data = [
