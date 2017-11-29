@@ -43,7 +43,7 @@ Swapping Renderer
 
 By default the package uses `rest_framework.renderers.JSONRenderer`. If you want
 to use another renderer (the only possible alternative is
-`rest_framework.renderers.UnicodeJSONRenderer`), you must specify it in your django
+`rest_framework.renderers.UnicodeJSONRenderer`, only available in DRF < 3.0), you must specify it in your django
 settings file.
 
 .. code-block:: python
