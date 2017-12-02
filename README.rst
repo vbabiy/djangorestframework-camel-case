@@ -54,6 +54,39 @@ settings file.
     }
     # ...
 
+=====================
+Underscoreize Options
+=====================
+
+As raised in https://github.com/krasa/StringManipulation/issues/8#issuecomment-121203018
+there are two conventions of snake case.
+
+.. code-block:: none
+
+    # Case 1 (Package default)
+    v2Counter -> v_2_counter
+    fooBar2 -> foo_bar_2
+
+    # Case 2
+    v2Counter -> v2_counter
+    fooBar2 -> foo_bar2
+
+
+By default, the package uses the first case. To use the second case, specify it in your django settings file.
+
+.. code-block:: python
+
+    REST_FRAMEWORK = {
+        # ...
+        'JSON_UNDERSCOREIZE': {
+            'no_underscore_before_number': True,
+        },
+        # ...
+    }
+
+
+
+
 =============
 Running Tests
 =============
