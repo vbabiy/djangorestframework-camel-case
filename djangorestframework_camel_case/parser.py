@@ -9,7 +9,7 @@ from djangorestframework_camel_case.util import underscoreize
 
 
 class CamelCaseJSONParser(api_settings.PARSER_CLASS):
-    'json_underscoreize' = api_settings.JSON_UNDERSCOREIZE
+    json_underscoreize = api_settings.JSON_UNDERSCOREIZE
 
     def parse(self, stream, media_type=None, parser_context=None):
         parser_context = parser_context or {}
