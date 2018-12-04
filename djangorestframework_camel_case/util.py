@@ -1,6 +1,7 @@
 import re
 from collections import OrderedDict
 
+from django.http.request import QueryDict, MultiValueDict
 from django.utils import six
 
 camelize_re = re.compile(r"[a-z0-9]?_[a-z0-9]")
@@ -43,6 +44,16 @@ def camel_to_underscore(name, **options):
 
 
 def underscoreize(data, **options):
+    if isinstance(data, QueryDict):
+        query_dict = QueryDict('', mutable=True)
+        for key, value in data.lists():
+            query_dict.setlist(camel_to_underscore(key, **options), value)
+        query_dict._mutable = False
+        return query_dict
+    if isinstance(data, MultiValueDict):
+        return MultiValueDict([
+            (camel_to_underscore(key, **options), value)
+            for key, value in data.lists()])
     if isinstance(data, dict):
         new_dict = {}
         for key, value in data.items():
