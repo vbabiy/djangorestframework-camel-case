@@ -3,6 +3,8 @@
 from copy import deepcopy
 from unittest import TestCase
 
+from django.http.request import MultiValueDict
+
 from djangorestframework_camel_case.util import camelize, underscoreize
 
 
@@ -119,3 +121,12 @@ class GeneratorAsInputTestCase(TestCase):
             {'that_is': 'correct'},
         ]
         self.assertEqual(underscoreize(data), output)
+
+
+class MultiValueDictTestCase(TestCase):
+    def test_underscoreize_and_saving_all_values(self):
+        data = MultiValueDict([])
+        data.setlist('testGetParameter', ['value1', 'value2'])
+        expected_value_list = ['value1', 'value2']
+        self.assertIsInstance(data, MultiValueDict)
+        self.assertEqual(underscoreize(data).getlist('test_get_parameter'), expected_value_list)
