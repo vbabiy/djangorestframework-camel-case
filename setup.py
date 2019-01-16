@@ -23,9 +23,9 @@ setup(
     version=djangorestframework_camel_case.__version__,
     description='Camel case JSON support for Django REST framework.',
     long_description=readme + '\n\n' + history,
-    author='Vitaly Babiy',
-    author_email='vbabiy86@gmail.com',
-    url='https://github.com/vbabiy/djangorestframework-camel-case',
+    author="Pocheng, playma",
+    author_email='pcghuang@gmail.com, scott820914@gmail.com',
+    url='https://github.com/Envive/djangorestframework-camel-case',
     packages=[
         'djangorestframework_camel_case',
     ],
