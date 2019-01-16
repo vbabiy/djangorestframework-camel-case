@@ -23,7 +23,7 @@ clean-pyc:
 	find . -name '*~' -exec rm -f {} +
 
 lint:
-	flake8 djangorestframework_camel_case tests
+	flake8 django_rest_framework_camel_case tests
 
 test:
 	python setup.py test
@@ -32,7 +32,7 @@ test-all:
 	tox
 
 coverage:
-	coverage run --source djangorestframework_camel_case setup.py test
+	coverage run --source django_rest_framework_camel_case setup.py test
 	coverage report -m
 	coverage html
 	open htmlcov/index.html

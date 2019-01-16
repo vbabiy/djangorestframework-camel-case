@@ -26,12 +26,12 @@ Add the render and parser to your django settings file.
     REST_FRAMEWORK = {
 
         'DEFAULT_RENDERER_CLASSES': (
-            'djangorestframework_camel_case.render.CamelCaseJSONRenderer',
+            'django_rest_framework_camel_case.render.CamelCaseJSONRenderer',
             # Any other renders
         ),
 
         'DEFAULT_PARSER_CLASSES': (
-            'djangorestframework_camel_case.parser.CamelCaseJSONParser',
+            'django_rest_framework_camel_case.parser.CamelCaseJSONParser',
             # Any other parsers
         ),
     }
