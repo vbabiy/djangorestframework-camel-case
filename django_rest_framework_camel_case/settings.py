@@ -26,9 +26,13 @@ VALID_SETTINGS = {
     'RENDERER_CLASS': (
         'rest_framework.renderers.JSONRenderer',
         'rest_framework.renderers.UnicodeJSONRenderer',
+        'rest_framework_google_json_style_api.renderers.JSONRenderer',
+        'rest_framework_json_api.renderers.JSONRenderer',
     ),
     'PARSER_CLASS': (
         'rest_framework.parsers.JSONParser',
+        'rest_framework_google_json_style_api.parsers.JSONParser',
+        'rest_framework_json_api.parsers.JSONParser',
     )
 }
 
