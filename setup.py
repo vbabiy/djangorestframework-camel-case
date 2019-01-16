@@ -27,7 +27,7 @@ setup(
     author_email=django_rest_framework_camel_case.__email__,
     url=django_rest_framework_camel_case.__url__,
     packages=[
-        'django-rest-framework-camel-case',
+        'django_rest_framework_camel_case',
     ],
     package_dir={'django_rest_framework_camel_case': 'django_rest_framework_camel_case'},
     include_package_data=True,
