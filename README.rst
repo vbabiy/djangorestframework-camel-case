@@ -38,19 +38,37 @@ Add the render and parser to your django settings file.
     # ...
 
 =================
-Swapping Renderer
+Swapping Renderer and Parser
 =================
 
-By default the package uses `rest_framework.renderers.JSONRenderer`. If you want
-to use another renderer (the only possible alternative is
-`rest_framework.renderers.UnicodeJSONRenderer`, only available in DRF < 3.0), you must specify it in your django
-settings file.
+By default the package uses `rest_framework.renderers.JSONRenderer` and `rest_framework.parsers.JSONParser`. 
+If you want to use another renderer or parser, you must specify it in your django settings file.
+
+Currently Support
+
+.. code-block:: python
+
+    'RENDERER_CLASS': (
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.UnicodeJSONRenderer', # only available in DRF < 3.0
+        'rest_framework_google_json_style_api.renderers.JSONRenderer',
+        'rest_framework_json_api.renderers.JSONRenderer',
+    ),
+    'PARSER_CLASS': (
+        'rest_framework.parsers.JSONParser',
+        'rest_framework_google_json_style_api.parsers.JSONParser',
+        'rest_framework_json_api.parsers.JSONParser',
+    )
+
+
+Specify it in your django settings file.
 
 .. code-block:: python
 
     # ...
     JSON_CAMEL_CASE = {
-        'RENDERER_CLASS': 'rest_framework.renderers.UnicodeJSONRenderer'
+        'RENDERER_CLASS': 'rest_framework_google_json_style_api.renderers.JSONRenderer',
+        'PARSER_CLASS': 'rest_framework_google_json_style_api.parsers.JSONParser',
     }
     # ...
 
