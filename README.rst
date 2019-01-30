@@ -31,6 +31,9 @@ Add the render and parser to your django settings file.
         ),
 
         'DEFAULT_PARSER_CLASSES': (
+            # If you use MultiPartFormParser or FormParser, we also have a camel case version
+            'djangorestframework_camel_case.parser.CamelCaseFormParser',
+            'djangorestframework_camel_case.parser.CamelCaseMultiPartParser',
             'djangorestframework_camel_case.parser.CamelCaseJSONParser',
             # Any other parsers
         ),
