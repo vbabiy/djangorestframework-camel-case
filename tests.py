@@ -3,6 +3,9 @@
 from copy import deepcopy
 from unittest import TestCase
 
+from django.conf import settings
+from django.http import QueryDict
+
 from djangorestframework_camel_case.util import camelize, underscoreize
 
 
@@ -119,3 +122,36 @@ class GeneratorAsInputTestCase(TestCase):
             {'that_is': 'correct'},
         ]
         self.assertEqual(underscoreize(data), output)
+
+
+class CamelToUnderscoreQueryDictTestCase(TestCase):
+    def setUp(self):
+        settings.configure()
+
+    def test_camel_to_under_keys(self):
+        query_dict = QueryDict("testList=1&testList=2", mutable=True)
+        data = {
+            "twoWord": 1,
+            "longKeyWithManyUnderscores": 2,
+            "only1Key": 3,
+            "onlyOneLetterA": 4,
+            "bOnlyOneLetter": 5,
+            "onlyCLetter": 6,
+            "mix123123aAndLetters": 7,
+        }
+        query_dict.update(data)
+        print(query_dict)
+
+        output_query = QueryDict("test_list=1&test_list=2", mutable=True)
+
+        output = {
+            "two_word": 1,
+            "long_key_with_many_underscores": 2,
+            "only_1_key": 3,
+            "only_one_letter_a": 4,
+            "b_only_one_letter": 5,
+            "only_c_letter": 6,
+            "mix_123123a_and_letters": 7,
+        }
+        output_query.update(output)
+        self.assertEqual(underscoreize(query_dict), output_query)
