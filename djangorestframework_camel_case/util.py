@@ -4,6 +4,8 @@ from collections import OrderedDict
 from django.core.files import File
 from django.http import QueryDict
 from django.utils import six
+from django.utils.encoding import force_text
+from django.utils.functional import Promise
 
 camelize_re = re.compile(r"[a-z0-9]?_[a-z0-9]")
 
@@ -17,6 +19,9 @@ def underscore_to_camel(match):
 
 
 def camelize(data):
+    # Handle lazy translated strings.
+    if isinstance(data, Promise):
+        data = force_text(data)
     if isinstance(data, dict):
         new_dict = OrderedDict()
         for key, value in data.items():
@@ -49,6 +54,7 @@ def _get_iterable(data):
         return data.lists()
     else:
         return data.items()
+
 
 def underscoreize(data, **options):
     if isinstance(data, dict):
