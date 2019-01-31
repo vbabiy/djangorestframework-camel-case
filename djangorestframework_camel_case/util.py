@@ -1,6 +1,7 @@
 import re
 from collections import OrderedDict
 
+from django.core.files import File
 from django.utils import six
 
 camelize_re = re.compile(r"[a-z0-9]?_[a-z0-9]")
@@ -52,7 +53,7 @@ def underscoreize(data, **options):
                 new_key = key
             new_dict[new_key] = underscoreize(value, **options)
         return new_dict
-    if is_iterable(data) and not isinstance(data, six.string_types):
+    if is_iterable(data) and not isinstance(data, (six.string_types, File)):
         return [underscoreize(item, **options) for item in data]
 
     return data
