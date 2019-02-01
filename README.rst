@@ -27,6 +27,7 @@ Add the render and parser to your django settings file.
 
         'DEFAULT_RENDERER_CLASSES': (
             'djangorestframework_camel_case.render.CamelCaseJSONRenderer',
+            'djangorestframework_camel_case.render.CamelCaseBrowsableAPIRenderer',
             # Any other renders
         ),
 
