@@ -5,6 +5,7 @@ from unittest import TestCase
 
 from django.conf import settings
 from django.http import QueryDict
+from django.utils.functional import lazy
 
 from djangorestframework_camel_case.util import camelize, underscoreize
 
@@ -98,6 +99,22 @@ class NonStringKeyTest(TestCase):
         self.assertEqual(underscoreize(camelize(data)), data)
 
 
+def return_string(text):
+    return text
+
+
+lazy_func = lazy(return_string, str)
+
+
+class PromiseStringTest(TestCase):
+    def test_promise_strings(self):
+        data = {lazy_func("test_key"): lazy_func("test_value value")}
+        camelized = camelize(data)
+        self.assertEquals(camelized, {'testKey': 'test_value value'})
+        result = underscoreize(camelized)
+        self.assertEqual(result, {"test_key": "test_value value"})
+
+
 class GeneratorAsInputTestCase(TestCase):
     def _underscore_generator(self):
         yield {'simple_is_better': 'than complex'}
@@ -140,7 +157,6 @@ class CamelToUnderscoreQueryDictTestCase(TestCase):
             "mix123123aAndLetters": 7,
         }
         query_dict.update(data)
-        print(query_dict)
 
         output_query = QueryDict("test_list=1&test_list=2", mutable=True)
 
