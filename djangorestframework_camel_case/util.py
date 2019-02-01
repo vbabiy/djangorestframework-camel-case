@@ -27,7 +27,7 @@ def camelize(data):
         for key, value in data.items():
             if isinstance(key, Promise):
                 key = force_text(key)
-            if isinstance(key, six.string_types) and '_' in key:
+            if isinstance(key, six.string_types) and "_" in key:
                 new_key = re.sub(camelize_re, underscore_to_camel, key)
             else:
                 new_key = key
@@ -39,16 +39,16 @@ def camelize(data):
 
 
 def get_underscoreize_re(options):
-    if options.get('no_underscore_before_number'):
-        pattern = r'([a-z]|[0-9]+[a-z]?|[A-Z]?)([A-Z])'
+    if options.get("no_underscore_before_number"):
+        pattern = r"([a-z]|[0-9]+[a-z]?|[A-Z]?)([A-Z])"
     else:
-        pattern = r'([a-z]|[0-9]+[a-z]?|[A-Z]?)([A-Z0-9])'
+        pattern = r"([a-z]|[0-9]+[a-z]?|[A-Z]?)([A-Z0-9])"
     return re.compile(pattern)
 
 
 def camel_to_underscore(name, **options):
     underscoreize_re = get_underscoreize_re(options)
-    return underscoreize_re.sub(r'\1_\2', name).lower()
+    return underscoreize_re.sub(r"\1_\2", name).lower()
 
 
 def _get_iterable(data):

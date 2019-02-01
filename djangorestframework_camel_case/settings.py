@@ -5,31 +5,23 @@ from django.core.exceptions import ImproperlyConfigured
 
 from rest_framework.settings import APISettings
 
-USER_SETTINGS = getattr(settings, 'JSON_CAMEL_CASE', {})
+USER_SETTINGS = getattr(settings, "JSON_CAMEL_CASE", {})
 
 DEFAULTS = {
-    'RENDERER_CLASS': 'rest_framework.renderers.JSONRenderer',
-    'PARSER_CLASS': 'rest_framework.parsers.JSONParser',
-
-    'JSON_UNDERSCOREIZE': {
-        'no_underscore_before_number': False,
-    },
+    "RENDERER_CLASS": "rest_framework.renderers.JSONRenderer",
+    "PARSER_CLASS": "rest_framework.parsers.JSONParser",
+    "JSON_UNDERSCOREIZE": {"no_underscore_before_number": False},
 }
 
 # List of settings that may be in string import notation.
-IMPORT_STRINGS = (
-    'RENDERER_CLASS',
-    'PARSER_CLASS'
-)
+IMPORT_STRINGS = ("RENDERER_CLASS", "PARSER_CLASS")
 
 VALID_SETTINGS = {
-    'RENDERER_CLASS': (
-        'rest_framework.renderers.JSONRenderer',
-        'rest_framework.renderers.UnicodeJSONRenderer',
+    "RENDERER_CLASS": (
+        "rest_framework.renderers.JSONRenderer",
+        "rest_framework.renderers.UnicodeJSONRenderer",
     ),
-    'PARSER_CLASS': (
-        'rest_framework.parsers.JSONParser',
-    )
+    "PARSER_CLASS": ("rest_framework.parsers.JSONParser",),
 }
 
 
