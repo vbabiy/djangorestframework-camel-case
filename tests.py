@@ -9,6 +9,8 @@ from django.utils.functional import lazy
 
 from djangorestframework_camel_case.util import camelize, underscoreize
 
+settings.configure()
+
 
 class UnderscoreToCamelTestCase(TestCase):
     def test_under_to_camel_keys(self):
@@ -142,8 +144,6 @@ class GeneratorAsInputTestCase(TestCase):
 
 
 class CamelToUnderscoreQueryDictTestCase(TestCase):
-    def setUp(self):
-        settings.configure()
 
     def test_camel_to_under_keys(self):
         query_dict = QueryDict("testList=1&testList=2", mutable=True)
