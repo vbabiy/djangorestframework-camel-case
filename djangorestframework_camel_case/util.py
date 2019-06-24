@@ -19,7 +19,8 @@ def underscore_to_camel(match):
         return group[1].upper()
 
 
-def camelize(data):
+def camelize(data, ignore_keys=None):
+    ignore_keys = ignore_keys or set()
     # Handle lazy translated strings.
     if isinstance(data, Promise):
         data = force_text(data)
@@ -35,10 +36,16 @@ def camelize(data):
                 new_key = re.sub(camelize_re, underscore_to_camel, key)
             else:
                 new_key = key
-            new_dict[new_key] = camelize(value)
+
+            # recurse and modify contents if key/field not ignored
+            if new_key not in ignore_keys and key not in ignore_keys:
+                new_dict[new_key] = camelize(value, ignore_keys)
+            else:
+                new_dict[new_key] = value
+
         return new_dict
     if is_iterable(data) and not isinstance(data, str):
-        return [camelize(item) for item in data]
+        return [camelize(item, ignore_keys) for item in data]
     return data
 
 
@@ -62,7 +69,8 @@ def _get_iterable(data):
         return data.items()
 
 
-def underscoreize(data, **options):
+def underscoreize(data, ignore_keys=None, **options):
+    ignore_keys = ignore_keys or set()
     if isinstance(data, dict):
         new_dict = {}
         for key, value in _get_iterable(data):
@@ -70,7 +78,12 @@ def underscoreize(data, **options):
                 new_key = camel_to_underscore(key, **options)
             else:
                 new_key = key
-            new_dict[new_key] = underscoreize(value, **options)
+
+            # recurse and modify contents if key/field not ignored
+            if new_key not in ignore_keys and key not in ignore_keys:
+                new_dict[new_key] = underscoreize(value, ignore_keys, **options)
+            else:
+                new_dict[new_key] = value
 
         if isinstance(data, QueryDict):
             new_query = QueryDict(mutable=True)
@@ -79,7 +92,7 @@ def underscoreize(data, **options):
             return new_query
         return new_dict
     if is_iterable(data) and not isinstance(data, (str, File)):
-        return [underscoreize(item, **options) for item in data]
+        return [underscoreize(item, ignore_keys, **options) for item in data]
 
     return data
 
