@@ -1,15 +1,14 @@
 # -*- coding: utf-8 -*-
 import json
 
-import six
 from django.conf import settings
 from django.http.multipartparser import (
     MultiPartParser as DjangoMultiPartParser,
     MultiPartParserError,
 )
+from django.util import six
 from rest_framework.exceptions import ParseError
-from rest_framework.parsers import MultiPartParser, DataAndFiles
-from rest_framework.parsers import six, FormParser
+from rest_framework.parsers import MultiPartParser, DataAndFiles, FormParser
 
 from djangorestframework_camel_case.settings import api_settings
 from djangorestframework_camel_case.util import underscoreize
