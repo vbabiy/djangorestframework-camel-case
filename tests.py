@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 from copy import deepcopy
 from unittest import TestCase
 
@@ -10,6 +8,21 @@ from django.utils.functional import lazy
 from djangorestframework_camel_case.util import camelize, underscoreize
 
 settings.configure()
+
+
+class ImportTest(TestCase):
+
+    def test_import_all(self):
+        """
+        A quick test that just imports everything, should crash in case any Django or DRF modules change
+        """
+        from djangorestframework_camel_case import parser
+        from djangorestframework_camel_case import render
+        from djangorestframework_camel_case import settings
+
+        assert parser
+        assert render
+        assert settings
 
 
 class UnderscoreToCamelTestCase(TestCase):

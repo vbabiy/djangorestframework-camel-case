@@ -3,7 +3,6 @@ from collections import OrderedDict
 
 from django.core.files import File
 from django.http import QueryDict
-from django.utils import six
 from django.utils.encoding import force_text
 from django.utils.functional import Promise
 
@@ -27,13 +26,13 @@ def camelize(data):
         for key, value in data.items():
             if isinstance(key, Promise):
                 key = force_text(key)
-            if isinstance(key, six.string_types) and "_" in key:
+            if isinstance(key, str) and "_" in key:
                 new_key = re.sub(camelize_re, underscore_to_camel, key)
             else:
                 new_key = key
             new_dict[new_key] = camelize(value)
         return new_dict
-    if is_iterable(data) and not isinstance(data, six.string_types):
+    if is_iterable(data) and not isinstance(data, str):
         return [camelize(item) for item in data]
     return data
 
@@ -62,7 +61,7 @@ def underscoreize(data, **options):
     if isinstance(data, dict):
         new_dict = {}
         for key, value in _get_iterable(data):
-            if isinstance(key, six.string_types):
+            if isinstance(key, str):
                 new_key = camel_to_underscore(key, **options)
             else:
                 new_key = key
@@ -74,7 +73,7 @@ def underscoreize(data, **options):
                 new_query.setlist(key, value)
             return new_query
         return new_dict
-    if is_iterable(data) and not isinstance(data, (six.string_types, File)):
+    if is_iterable(data) and not isinstance(data, (str, File)):
         return [underscoreize(item, **options) for item in data]
 
     return data
