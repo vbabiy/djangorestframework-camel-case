@@ -3,6 +3,11 @@
 History
 =======
 
+1.1.1 (2019-09-09)
+------------------
+
+- Add json_underscoreize as CamelCaseJSONParser class attribute #44
+
 1.1.0 (2019-09-09)
 ------------------
 
