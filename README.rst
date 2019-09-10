@@ -65,7 +65,7 @@ Underscoreize Options
 As raised in https://github.com/krasa/StringManipulation/issues/8#issuecomment-121203018
 there are two conventions of snake case.
 
-.. code-block:: none
+.. code-block:: text
 
     # Case 1 (Package default)
     v2Counter -> v_2_counter
