@@ -88,8 +88,20 @@ By default, the package uses the first case. To use the second case, specify it 
         # ...
     }
 
+Alternatively, you can change this behavior on a class level by setting `json_underscoreize`:
 
+.. code-block:: python
 
+    from djangorestframework_camel_case.parser import CamelCaseJSONParser
+    from rest_framework.generics import CreateAPIView
+
+    class NoUnderscoreBeforeNumberCamelCaseJSONParser(CamelCaseJSONParser):
+        json_underscoreize = {'no_underscore_before_number': True}
+
+    class MyView(CreateAPIView):
+        queryset = MyModel.objects.all()
+        serializer_class = MySerializer
+        parser_classes = (NoUnderscoreBeforeNumberCamelCaseJSONParser,)
 
 =============
 Running Tests
