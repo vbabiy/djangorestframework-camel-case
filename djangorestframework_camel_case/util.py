@@ -39,9 +39,9 @@ def camelize(data):
 
 def get_underscoreize_re(options):
     if options.get("no_underscore_before_number"):
-        pattern = r"([a-z]|[0-9]+[a-z]?|[A-Z]?)([A-Z])"
+        pattern = r"([a-z0-9]|[A-Z]?(?=[A-Z](?=[a-z])))([A-Z])"
     else:
-        pattern = r"([a-z]|[0-9]+[a-z]+|[A-Z]?)([A-Z]|[0-9]+)"
+        pattern = r"([a-z0-9]|[A-Z]?(?=[A-Z](?=[a-z])))([A-Z]|(?<=[a-z])[0-9](?=[0-9A-Z]))"
     return re.compile(pattern)
 
 
