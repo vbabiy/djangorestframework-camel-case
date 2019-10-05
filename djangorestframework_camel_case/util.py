@@ -41,7 +41,7 @@ def get_underscoreize_re(options):
     if options.get("no_underscore_before_number"):
         pattern = r"([a-z]|[0-9]+[a-z]?|[A-Z]?)([A-Z])"
     else:
-        pattern = r"([a-z]|[0-9]+[a-z]?|[A-Z]?)([A-Z0-9])"
+        pattern = r"([a-z]|[0-9]+[a-z]+|[A-Z]?)([A-Z]|[0-9]+)"
     return re.compile(pattern)
 
 

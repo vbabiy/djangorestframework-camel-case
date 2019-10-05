@@ -71,6 +71,9 @@ class CamelToUnderscoreTestCase(TestCase):
             "bOnlyOneLetter": 5,
             "onlyCLetter": 6,
             "mix123123aAndLetters": 7,
+            "key10": 8,
+            "anotherKey10": 9,
+            "optionS10": 10,
         }
         output = {
             "two_word": 1,
@@ -80,6 +83,9 @@ class CamelToUnderscoreTestCase(TestCase):
             "b_only_one_letter": 5,
             "only_c_letter": 6,
             "mix_123123a_and_letters": 7,
+            "key_10": 8,
+            "another_key_10": 9,
+            "option_s_10": 10,
         }
         self.assertEqual(underscoreize(data), output)
 
