@@ -35,7 +35,8 @@ class UnderscoreToCamelTestCase(TestCase):
             "b_only_one_letter": 5,
             "only_c_letter": 6,
             "mix_123123a_and_letters": 7,
-            "no_underscore_before123": 8,
+            "mix_123123aa_and_letters_complex": 8,
+            "no_underscore_before123": 9,
         }
         output = {
             "twoWord": 1,
@@ -45,7 +46,8 @@ class UnderscoreToCamelTestCase(TestCase):
             "bOnlyOneLetter": 5,
             "onlyCLetter": 6,
             "mix123123aAndLetters": 7,
-            "noUnderscoreBefore123": 8,
+            "mix123123aaAndLettersComplex": 8,
+            "noUnderscoreBefore123": 9,
         }
         self.assertEqual(camelize(data), output)
 
@@ -71,9 +73,11 @@ class CamelToUnderscoreTestCase(TestCase):
             "bOnlyOneLetter": 5,
             "onlyCLetter": 6,
             "mix123123aAndLetters": 7,
-            "key10": 8,
-            "anotherKey10": 9,
-            "optionS10": 10,
+            "mix123123aaAndLettersComplex": 8,
+            "wordWITHCaps": 9,
+            "key10": 10,
+            "anotherKey10": 11,
+            "optionS10": 12,
         }
         output = {
             "two_word": 1,
@@ -83,9 +87,11 @@ class CamelToUnderscoreTestCase(TestCase):
             "b_only_one_letter": 5,
             "only_c_letter": 6,
             "mix_123123a_and_letters": 7,
-            "key_10": 8,
-            "another_key_10": 9,
-            "option_s_10": 10,
+            "mix_123123aa_and_letters_complex": 8,
+            "word_with_caps": 9,
+            "key_10": 10,
+            "another_key_10": 11,
+            "option_s_10": 12,
         }
         self.assertEqual(underscoreize(data), output)
 
@@ -155,6 +161,11 @@ class CamelToUnderscoreQueryDictTestCase(TestCase):
             "bOnlyOneLetter": 5,
             "onlyCLetter": 6,
             "mix123123aAndLetters": 7,
+            "mix123123aaAndLettersComplex": 8,
+            "wordWITHCaps": 9,
+            "key10": 10,
+            "anotherKey10": 11,
+            "optionS10": 12,
         }
         query_dict.update(data)
 
@@ -168,6 +179,11 @@ class CamelToUnderscoreQueryDictTestCase(TestCase):
             "b_only_one_letter": 5,
             "only_c_letter": 6,
             "mix_123123a_and_letters": 7,
+            "mix_123123aa_and_letters_complex": 8,
+            "word_with_caps": 9,
+            "key_10": 10,
+            "another_key_10": 11,
+            "option_s_10": 12,
         }
         output_query.update(output)
         self.assertEqual(underscoreize(query_dict), output_query)
