@@ -5,6 +5,8 @@ from django.conf import settings
 from django.http import QueryDict
 from django.utils.functional import lazy
 
+from rest_framework.utils.serializer_helpers import ReturnDict
+
 from djangorestframework_camel_case.util import camelize, underscoreize
 
 settings.configure()
@@ -127,6 +129,14 @@ class PromiseStringTest(TestCase):
         self.assertEquals(camelized, {"testKey": "test_value value"})
         result = underscoreize(camelized)
         self.assertEqual(result, {"test_key": "test_value value"})
+
+
+class ReturnDictTest(TestCase):
+    def test_return_dict(self):
+        data = ReturnDict({"id": 3, "value": "val"}, serializer=object())
+        camelized = camelize(data)
+        self.assertEqual(data, camelized)
+        self.assertEqual(data.serializer, camelized.serializer)
 
 
 class GeneratorAsInputTestCase(TestCase):
