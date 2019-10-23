@@ -3,6 +3,13 @@
 History
 =======
 
+1.1.2 (2019-10-22)
+------------------
+
+- Merge pull request #63
+- Merge pull request #70
+- Merge pull request #71
+
 1.1.1 (2019-09-09)
 ------------------
 
