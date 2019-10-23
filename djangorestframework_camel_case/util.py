@@ -6,6 +6,8 @@ from django.http import QueryDict
 from django.utils.encoding import force_text
 from django.utils.functional import Promise
 
+from rest_framework.utils.serializer_helpers import ReturnDict
+
 camelize_re = re.compile(r"[a-z0-9]?_[a-z0-9]")
 
 
@@ -22,7 +24,10 @@ def camelize(data):
     if isinstance(data, Promise):
         data = force_text(data)
     if isinstance(data, dict):
-        new_dict = OrderedDict()
+        if isinstance(data, ReturnDict):
+            new_dict = ReturnDict(serializer=data.serializer)
+        else:
+            new_dict = OrderedDict()
         for key, value in data.items():
             if isinstance(key, Promise):
                 key = force_text(key)
