@@ -16,6 +16,7 @@ parts
 bin
 var
 sdist
+.venv
 develop-eggs
 .installed.cfg
 lib

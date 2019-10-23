@@ -11,7 +11,6 @@ settings.configure()
 
 
 class ImportTest(TestCase):
-
     def test_import_all(self):
         """
         A quick test that just imports everything, should crash in case any Django or DRF modules change
