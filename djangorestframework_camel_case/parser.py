@@ -16,13 +16,20 @@ from djangorestframework_camel_case.util import underscoreize
 class CamelCaseJSONParser(api_settings.PARSER_CLASS):
     json_underscoreize = api_settings.JSON_UNDERSCOREIZE
 
+    """
+    :param ignore_keys: a set of keys to whose values to ignore whilse recusrively trversing the data
+    """
+    def __init__(self, ignore_keys=None):
+        self.ignore_keys = ignore_keys or set()
+        super().__init__()
+
     def parse(self, stream, media_type=None, parser_context=None):
         parser_context = parser_context or {}
         encoding = parser_context.get("encoding", settings.DEFAULT_CHARSET)
 
         try:
             data = stream.read().decode(encoding)
-            return underscoreize(json.loads(data), **self.json_underscoreize)
+            return underscoreize(json.loads(data), ignore_keys=self.ignore_keys, **self.json_underscoreize)
         except ValueError as exc:
             raise ParseError("JSON parse error - %s" % str(exc))
 
