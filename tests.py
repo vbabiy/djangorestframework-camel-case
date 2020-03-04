@@ -64,7 +64,7 @@ class UnderscoreToCamelTestCase(TestCase):
         self.assertEqual(data, reference_input)
 
     def test_recursive_with_ignored_keys(self):
-        ignore_fields = ("ignore_me", "new_key")
+        ignore_fields = ("ignore_me", "newKey")
         data = {
             "ignore_me": {"no_change_recursive": 1},
             "change_me": {"change_recursive": 2},
@@ -127,7 +127,7 @@ class CamelToUnderscoreTestCase(TestCase):
         self.assertEqual(data, reference_input)
 
     def test_recursive_with_ignored_keys(self):
-        ignore_fields = ("ignore_me", "new_key")
+        ignore_fields = ("ignore_me", "newKey")
         data = {
             "ignoreMe": {"noChangeRecursive": 1},
             "changeMe": {"changeRecursive": 2},
