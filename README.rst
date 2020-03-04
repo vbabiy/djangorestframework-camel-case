@@ -62,6 +62,10 @@ settings file.
 Underscoreize Options
 =====================
 
+###########################
+No Underscore Before Number
+###########################
+
 As raised in https://github.com/krasa/StringManipulation/issues/8#issuecomment-121203018
 there are two conventions of snake case.
 
@@ -102,6 +106,44 @@ Alternatively, you can change this behavior on a class level by setting `json_un
         queryset = MyModel.objects.all()
         serializer_class = MySerializer
         parser_classes = (NoUnderscoreBeforeNumberCamelCaseJSONParser,)
+
+#############
+Ignore Fields
+#############
+
+You can also specify fields which should not have their data changed.
+The specified field(s) would still have their name change, but there would be no recursion.
+For example:
+
+.. code-block:: python
+
+    data = {"my_key": {"do_not_change": 1}}
+
+Would become:
+
+.. code-block:: python
+
+    {"myKey": {"doNotChange": 1}}
+
+However, if you set in your settings:
+
+.. code-block:: python
+
+    REST_FRAMEWORK = {
+        # ...
+        "JSON_UNDERSCOREIZE": {
+            # ...
+            "ignore_fields": ("my_key",),
+            # ...
+        },
+        # ...
+    }
+
+The `my_key` field would not have its data changed:
+
+.. code-block:: python
+
+    {"myKey": {"do_not_change": 1}}
 
 =============
 Running Tests
