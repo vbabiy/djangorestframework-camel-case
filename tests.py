@@ -194,6 +194,12 @@ class ReturnDictTest(TestCase):
         self.assertEqual(data.serializer, camelized.serializer)
 
 
+class NumberToCamelTestCase(TestCase):
+    def test_dict_with_numbers_as_keys(self):
+        data = {1: 'test', 'a': 'abc'}
+        self.assertEqual(camelize(data), data)
+
+
 class GeneratorAsInputTestCase(TestCase):
     def _underscore_generator(self):
         yield {"simple_is_better": "than complex"}
