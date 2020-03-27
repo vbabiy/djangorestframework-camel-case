@@ -66,7 +66,7 @@ Underscoreize Options
 No Underscore Before Number
 ###########################
 
-As raised in https://github.com/krasa/StringManipulation/issues/8#issuecomment-121203018
+As raised in `this comment <https://github.com/krasa/StringManipulation/issues/8#issuecomment-121203018>`_
 there are two conventions of snake case.
 
 .. code-block:: text
