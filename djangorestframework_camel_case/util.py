@@ -3,6 +3,7 @@ from collections import OrderedDict
 
 from django.core.files import File
 from django.http import QueryDict
+from django.utils.datastructures import MultiValueDict
 from django.utils.encoding import force_text
 from django.utils.functional import Promise
 
@@ -65,6 +66,11 @@ def _get_iterable(data):
 def underscoreize(data, **options):
     if isinstance(data, dict):
         new_dict = {}
+        if type(data) == MultiValueDict:
+            new_data = MultiValueDict()
+            for key, value in data.items():
+                new_data.setlist(camel_to_underscore(key, **options), data.getlist(key))
+            return new_data
         for key, value in _get_iterable(data):
             if isinstance(key, str):
                 new_key = camel_to_underscore(key, **options)
