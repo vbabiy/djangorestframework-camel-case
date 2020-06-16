@@ -62,9 +62,9 @@ settings file.
 Underscoreize Options
 =====================
 
-###########################
-No Underscore Before Number
-###########################
+
+**No Underscore Before Number**
+
 
 As raised in `this comment <https://github.com/krasa/StringManipulation/issues/8#issuecomment-121203018>`_
 there are two conventions of snake case.
@@ -107,9 +107,9 @@ Alternatively, you can change this behavior on a class level by setting `json_un
         serializer_class = MySerializer
         parser_classes = (NoUnderscoreBeforeNumberCamelCaseJSONParser,)
 
-#############
+=============
 Ignore Fields
-#############
+=============
 
 You can also specify fields which should not have their data changed.
 The specified field(s) would still have their name change, but there would be no recursion.
