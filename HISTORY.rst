@@ -3,6 +3,16 @@
 History
 =======
 
+
+1.2.0 (2022-06-16)
+------------------
+
+- added ignore_fields
+- Merge pull request #88
+- Merge pull request #84
+- Merge pull request #77
+- Merge pull request #73
+
 1.1.2 (2019-10-22)
 ------------------
 
