@@ -63,6 +63,20 @@ class UnderscoreToCamelTestCase(TestCase):
         camelize(data)
         self.assertEqual(data, reference_input)
 
+    def test_recursive_with_ignored_keys(self):
+        ignore_fields = ("ignore_me", "newKey")
+        data = {
+            "ignore_me": {"no_change_recursive": 1},
+            "change_me": {"change_recursive": 2},
+            "new_key": {"also_no_change": 3},
+        }
+        output = {
+            "ignoreMe": {"no_change_recursive": 1},
+            "changeMe": {"changeRecursive": 2},
+            "newKey": {"also_no_change": 3},
+        }
+        self.assertEqual(camelize(data, ignore_fields=ignore_fields), output)
+
 
 class CamelToUnderscoreTestCase(TestCase):
     def test_camel_to_under_keys(self):
@@ -112,6 +126,20 @@ class CamelToUnderscoreTestCase(TestCase):
         underscoreize(data)
         self.assertEqual(data, reference_input)
 
+    def test_recursive_with_ignored_keys(self):
+        ignore_fields = ("ignore_me", "newKey")
+        data = {
+            "ignoreMe": {"noChangeRecursive": 1},
+            "changeMe": {"changeRecursive": 2},
+            "newKey": {"alsoNoChange": 3},
+        }
+        output = {
+            "ignore_me": {"noChangeRecursive": 1},
+            "change_me": {"change_recursive": 2},
+            "new_key": {"alsoNoChange": 3},
+        }
+        self.assertEqual(underscoreize(data, ignore_fields=ignore_fields), output)
+
 
 class NonStringKeyTest(TestCase):
     def test_non_string_key(self):
@@ -130,7 +158,7 @@ class PromiseStringTest(TestCase):
     def test_promise_strings(self):
         data = {lazy_func("test_key"): lazy_func("test_value value")}
         camelized = camelize(data)
-        self.assertEquals(camelized, {"testKey": "test_value value"})
+        self.assertEqual(camelized, {"testKey": "test_value value"})
         result = underscoreize(camelized)
         self.assertEqual(result, {"test_key": "test_value value"})
 
