@@ -37,10 +37,10 @@ def camelize(data, **options):
                 new_key = re.sub(camelize_re, underscore_to_camel, key)
             else:
                 new_key = key
-            if key not in ignore_fields and new_key not in ignore_fields:
+            if key not in ignore_fields:
                 new_dict[new_key] = camelize(value, **options)
             else:
-                new_dict[new_key] = value
+                new_dict[key] = value
         return new_dict
     if is_iterable(data) and not isinstance(data, str):
         return [camelize(item, **options) for item in data]
