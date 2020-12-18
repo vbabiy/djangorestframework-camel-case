@@ -4,7 +4,7 @@ from collections import OrderedDict
 from django.core.files import File
 from django.http import QueryDict
 from django.utils.datastructures import MultiValueDict
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 from django.utils.functional import Promise
 
 from rest_framework.utils.serializer_helpers import ReturnDict
@@ -24,7 +24,7 @@ def camelize(data, **options):
     # Handle lazy translated strings.
     ignore_fields = options.get("ignore_fields") or ()
     if isinstance(data, Promise):
-        data = force_text(data)
+        data = force_str(data)
     if isinstance(data, dict):
         if isinstance(data, ReturnDict):
             new_dict = ReturnDict(serializer=data.serializer)
@@ -32,7 +32,7 @@ def camelize(data, **options):
             new_dict = OrderedDict()
         for key, value in data.items():
             if isinstance(key, Promise):
-                key = force_text(key)
+                key = force_str(key)
             if isinstance(key, str) and "_" in key:
                 new_key = re.sub(camelize_re, underscore_to_camel, key)
             else:
