@@ -63,19 +63,28 @@ class UnderscoreToCamelTestCase(TestCase):
         camelize(data)
         self.assertEqual(data, reference_input)
 
-    def test_recursive_with_ignored_keys(self):
-        ignore_fields = ("ignore_me", "newKey")
+    def test_recursive_camelize_with_ignored_fields_and_keys(self):
+        ignore_fields = ("ignored_field", "newKeyIgnoredField", "ignored_field_and_key", "ignoredFieldAndKey2")
+        ignore_keys = ("ignored_key", "newKeyIgnoredKey", "ignored_field_and_key", "ignoredFieldAndKey2")
         data = {
-            "ignore_me": {"no_change_recursive": 1},
+            "ignored_field": {"no_change_recursive": 1},
             "change_me": {"change_recursive": 2},
-            "new_key": {"also_no_change": 3},
+            "new_key_ignored_field": {"also_no_change": 3},
+            "ignored_key": {"also_change_recursive": 4},
+            "new_key_ignored_key": {"change_is_here_to_stay": 5},
+            "ignored_field_and_key": {"no_change_here": 6},
+            "ignored_field_and_key2": {"no_change_here_either": 7},
         }
         output = {
-            "ignoreMe": {"no_change_recursive": 1},
+            "ignoredField": {"no_change_recursive": 1},
             "changeMe": {"changeRecursive": 2},
-            "newKey": {"also_no_change": 3},
+            "newKeyIgnoredField": {"also_no_change": 3},
+            "ignored_key": {"alsoChangeRecursive": 4},
+            "new_key_ignored_key": {"changeIsHereToStay": 5},
+            "ignored_field_and_key": {"no_change_here": 6},
+            "ignored_field_and_key2": {"no_change_here_either": 7},
         }
-        self.assertEqual(camelize(data, ignore_fields=ignore_fields), output)
+        self.assertEqual(camelize(data, ignore_fields=ignore_fields, ignore_keys=ignore_keys), output)
 
 
 class CamelToUnderscoreTestCase(TestCase):
@@ -126,19 +135,28 @@ class CamelToUnderscoreTestCase(TestCase):
         underscoreize(data)
         self.assertEqual(data, reference_input)
 
-    def test_recursive_with_ignored_keys(self):
-        ignore_fields = ("ignore_me", "newKey")
+    def test_recursive_underscoreize_with_ignored_fields_and_keys(self):
+        ignore_fields = ("ignoredField", "new_key_ignored_field", "ignoredFieldAndKey", "ignored_field_and_key_2")
+        ignore_keys = ("ignoredKey", "new_key_ignored_key", "ignoredFieldAndKey", "ignored_field_and_key_2")
         data = {
-            "ignoreMe": {"noChangeRecursive": 1},
-            "changeMe": {"changeRecursive": 2},
-            "newKey": {"alsoNoChange": 3},
+            "ignoredField": {"noChangeRecursive": 1},
+            "changeMeField": {"changeRecursive": 2},
+            "newKeyIgnoredField": {"alsoNoChange": 3},
+            "ignoredKey": {"changeRecursiveAgain": 4},
+            "newKeyIgnoredKey": {"changeIsHereToStay": 5},
+            "ignoredFieldAndKey": {"noChangeHere": 6},
+            "ignoredFieldAndKey2": {"noChangeHereEither": 7},
         }
         output = {
-            "ignore_me": {"noChangeRecursive": 1},
-            "change_me": {"change_recursive": 2},
-            "new_key": {"alsoNoChange": 3},
+            "ignored_field": {"noChangeRecursive": 1},
+            "change_me_field": {"change_recursive": 2},
+            "new_key_ignored_field": {"alsoNoChange": 3},
+            "ignoredKey": {"change_recursive_again": 4},
+            "newKeyIgnoredKey": {"change_is_here_to_stay": 5},
+            "ignoredFieldAndKey": {"noChangeHere": 6},
+            "ignoredFieldAndKey2": {"noChangeHereEither": 7},
         }
-        self.assertEqual(underscoreize(data, ignore_fields=ignore_fields), output)
+        self.assertEqual(underscoreize(data, ignore_fields=ignore_fields, ignore_keys=ignore_keys), output)
 
 
 class NonStringKeyTest(TestCase):
