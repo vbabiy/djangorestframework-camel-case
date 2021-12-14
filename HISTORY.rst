@@ -2,6 +2,14 @@
 
 History
 =======
+1.3.0 (2021-11-14)
+------------------
+- Merge pull request #104
+- Merge pull request #99
+- Merge pull request #100
+- Merge pull request #90
+- Merge pull request #92
+
 
 1.2.0 (2020-06-16)
 ------------------
