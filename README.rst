@@ -146,6 +146,35 @@ The `my_key` field would not have its data changed:
     {"myKey": {"do_not_change": 1}}
 
 =============
+Use lower camel case style
+=============
+
+You can also specify lowerCamelCase behaviour, in which first letter will be always in lower case.
+For example:
+
+.. code-block:: python
+
+    data = {"_some_key": 1}
+
+Would become:
+
+.. code-block:: python
+
+    {"someKey": 1}
+
+By default, the package not uses lowerCamelCase behaviour. To use it, specify it in your django settings file.
+
+.. code-block:: python
+
+    REST_FRAMEWORK = {
+        # ...
+        'JSON_UNDERSCOREIZE': {
+            'lower_camel_case': True,
+        },
+        # ...
+    }
+
+=============
 Running Tests
 =============
 

@@ -9,20 +9,13 @@ from django.utils.functional import Promise
 
 from rest_framework.utils.serializer_helpers import ReturnDict
 
-camelize_re = re.compile(r"[a-z0-9]?_[a-z0-9]")
-
-
-def underscore_to_camel(match):
-    group = match.group()
-    if len(group) == 3:
-        return group[0] + group[2].upper()
-    else:
-        return group[1].upper()
+camelize_re = re.compile("_[a-z0-9]")
 
 
 def camelize(data, **options):
     # Handle lazy translated strings.
     ignore_fields = options.get("ignore_fields") or ()
+    lower_camel_case = options.get("lower_camel_case") or False
     if isinstance(data, Promise):
         data = force_str(data)
     if isinstance(data, dict):
@@ -34,7 +27,9 @@ def camelize(data, **options):
             if isinstance(key, Promise):
                 key = force_str(key)
             if isinstance(key, str) and "_" in key:
-                new_key = re.sub(camelize_re, underscore_to_camel, key)
+                new_key = re.sub(camelize_re, lambda match: match.group()[1].upper(), key)
+                if new_key and lower_camel_case:
+                    new_key = f'{new_key[0].lower()}{new_key[1:]}'
             else:
                 new_key = key
             if key not in ignore_fields and new_key not in ignore_fields:
