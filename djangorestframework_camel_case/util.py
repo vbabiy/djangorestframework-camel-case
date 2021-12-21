@@ -22,7 +22,8 @@ def underscore_to_camel(match):
 
 def camelize(data, **options):
     # Handle lazy translated strings.
-    ignore_fields = options.get("ignore_fields") or ()
+    ignore_fields = options.get("ignore_fields", ())
+    lower_camel_case = options.get("lower_camel_case", False)
     if isinstance(data, Promise):
         data = force_str(data)
     if isinstance(data, dict):
@@ -35,6 +36,8 @@ def camelize(data, **options):
                 key = force_str(key)
             if isinstance(key, str) and "_" in key:
                 new_key = re.sub(camelize_re, underscore_to_camel, key)
+                if new_key and lower_camel_case:
+                    new_key = f'{new_key[0].lower()}{new_key[1:]}'
             else:
                 new_key = key
             if key not in ignore_fields and new_key not in ignore_fields:

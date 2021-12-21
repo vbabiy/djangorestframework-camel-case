@@ -38,6 +38,7 @@ class UnderscoreToCamelTestCase(TestCase):
             "mix_123123a_and_letters": 7,
             "mix_123123aa_and_letters_complex": 8,
             "no_underscore_before123": 9,
+            "": 10,
         }
         output = {
             "twoWord": 1,
@@ -49,8 +50,36 @@ class UnderscoreToCamelTestCase(TestCase):
             "mix123123aAndLetters": 7,
             "mix123123aaAndLettersComplex": 8,
             "noUnderscoreBefore123": 9,
+            "": 10,
         }
         self.assertEqual(camelize(data), output)
+
+    def test_under_to_camel_keys_with_lower_camel_case(self):
+        data = {
+            "_two_word": 1,
+            "_long_key_with_many_underscores": 2,
+            "_only_1_key": 3,
+            "_only_one_letter_a": 4,
+            "_b_only_one_letter": 5,
+            "_only_c_letter": 6,
+            "_mix_123123a_and_letters": 7,
+            "_mix_123123aa_and_letters_complex": 8,
+            "_no_underscore_before123": 9,
+            "": 10,
+        }
+        output = {
+            "twoWord": 1,
+            "longKeyWithManyUnderscores": 2,
+            "only1Key": 3,
+            "onlyOneLetterA": 4,
+            "bOnlyOneLetter": 5,
+            "onlyCLetter": 6,
+            "mix123123aAndLetters": 7,
+            "mix123123aaAndLettersComplex": 8,
+            "noUnderscoreBefore123": 9,
+            "": 10,
+        }
+        self.assertEqual(camelize(data, lower_camel_case=True), output)
 
     def test_tuples(self):
         data = {"multiple_values": (1, 2), "data": [1, 3, 4]}
