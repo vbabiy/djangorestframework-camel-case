@@ -14,8 +14,8 @@ camelize_re = re.compile("_[a-z0-9]")
 
 def camelize(data, **options):
     # Handle lazy translated strings.
-    ignore_fields = options.get("ignore_fields") or ()
-    lower_camel_case = options.get("lower_camel_case") or False
+    ignore_fields = options.get("ignore_fields", ())
+    lower_camel_case = options.get("lower_camel_case", False)
     if isinstance(data, Promise):
         data = force_str(data)
     if isinstance(data, dict):
