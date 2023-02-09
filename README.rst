@@ -11,7 +11,7 @@ Django REST Framework JSON CamelCase
 Camel case JSON support for Django REST framework.
 
 ============
-Installation
+Installation:w
 ============
 
 At the command line::
