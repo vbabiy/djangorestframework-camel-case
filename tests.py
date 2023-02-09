@@ -104,6 +104,7 @@ class CamelToUnderscoreTestCase(TestCase):
             "anotherKey10": 12,
             "optionS1": 13,
             "optionS10": 14,
+            "UPPERCASE": 15,
         }
         output = {
             "two_word": 1,
@@ -120,6 +121,7 @@ class CamelToUnderscoreTestCase(TestCase):
             "another_key_10": 12,
             "option_s_1": 13,
             "option_s_10": 14,
+            "uppercase": 15,
         }
         self.assertEqual(underscoreize(data), output)
 
@@ -227,6 +229,7 @@ class CamelToUnderscoreQueryDictTestCase(TestCase):
             "anotherKey10": 12,
             "optionS1": 13,
             "optionS10": 14,
+            "UPPERCASE": 15,
         }
         query_dict.update(data)
 
@@ -247,6 +250,7 @@ class CamelToUnderscoreQueryDictTestCase(TestCase):
             "another_key_10": 12,
             "option_s_1": 13,
             "option_s_10": 14,
+            "uppercase": 15,
         }
         output_query.update(output)
         self.assertEqual(underscoreize(query_dict), output_query)
