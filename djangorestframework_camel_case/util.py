@@ -23,6 +23,7 @@ def underscore_to_camel(match):
 def camelize(data, **options):
     # Handle lazy translated strings.
     ignore_fields = options.get("ignore_fields") or ()
+    ignore_keys = options.get("ignore_keys") or ()
     if isinstance(data, Promise):
         data = force_str(data)
     if isinstance(data, dict):
@@ -37,10 +38,15 @@ def camelize(data, **options):
                 new_key = re.sub(camelize_re, underscore_to_camel, key)
             else:
                 new_key = key
+
             if key not in ignore_fields and new_key not in ignore_fields:
-                new_dict[new_key] = camelize(value, **options)
+                result = camelize(value, **options)
             else:
-                new_dict[new_key] = value
+                result = value
+            if key in ignore_keys or new_key in ignore_keys:
+                new_dict[key] = result
+            else:
+                new_dict[new_key] = result
         return new_dict
     if is_iterable(data) and not isinstance(data, str):
         return [camelize(item, **options) for item in data]
@@ -69,6 +75,7 @@ def _get_iterable(data):
 
 def underscoreize(data, **options):
     ignore_fields = options.get("ignore_fields") or ()
+    ignore_keys = options.get("ignore_keys") or ()
     if isinstance(data, dict):
         new_dict = {}
         if type(data) == MultiValueDict:
@@ -83,9 +90,13 @@ def underscoreize(data, **options):
                 new_key = key
 
             if key not in ignore_fields and new_key not in ignore_fields:
-                new_dict[new_key] = underscoreize(value, **options)
+                result = underscoreize(value, **options)
             else:
-                new_dict[new_key] = value
+                result = value
+            if key in ignore_keys or new_key in ignore_keys:
+                new_dict[key] = result
+            else:
+                new_dict[new_key] = result
 
         if isinstance(data, QueryDict):
             new_query = QueryDict(mutable=True)

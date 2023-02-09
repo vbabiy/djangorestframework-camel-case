@@ -11,6 +11,8 @@ History
 - Merge pull request #92
 
 
+- added ignore_keys
+
 1.2.0 (2020-06-16)
 ------------------
 

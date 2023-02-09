@@ -145,6 +145,46 @@ The `my_key` field would not have its data changed:
 
     {"myKey": {"do_not_change": 1}}
 
+===========
+Ignore Keys
+===========
+
+You can also specify keys which should *not* be renamed.
+The specified field(s) would still change (even recursively).
+For example:
+
+.. code-block:: python
+
+    data = {"unchanging_key": {"change_me": 1}}
+
+Would become:
+
+.. code-block:: python
+
+    {"unchangingKey": {"changeMe": 1}}
+
+However, if you set in your settings:
+
+.. code-block:: python
+
+    REST_FRAMEWORK = {
+        # ...
+        "JSON_UNDERSCOREIZE": {
+            # ...
+            "ignore_keys": ("unchanging_key",),
+            # ...
+        },
+        # ...
+    }
+
+The `unchanging_key` field would not be renamed:
+
+.. code-block:: python
+
+    {"unchanging_key": {"changeMe": 1}}
+
+ignore_keys and ignore_fields can be applied to the same key if required.
+
 =============
 Running Tests
 =============
