@@ -41,6 +41,17 @@ Add the render and parser to your django settings file.
     }
     # ...
 
+Add query param middleware to django settings file.
+
+.. code-block:: python
+
+    # ...
+    MIDDLEWARE = [
+        # Any other middleware
+        'djangorestframework_camel_case.middleware.CamelCaseMiddleWare',
+    ]
+    # ...
+
 =================
 Swapping Renderer
 =================
