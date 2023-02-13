@@ -11,7 +11,7 @@ Django REST Framework JSON CamelCase
 Camel case JSON support for Django REST framework.
 
 ============
-Installation:w
+Installation
 ============
 
 At the command line::
@@ -46,15 +46,17 @@ Swapping Renderer
 =================
 
 By default the package uses `rest_framework.renderers.JSONRenderer`. If you want
-to use another renderer (the only possible alternative is
-`rest_framework.renderers.UnicodeJSONRenderer`, only available in DRF < 3.0), you must specify it in your django
+to use another renderer, the two possible are:
+
+`drf_orjson_renderer.renderers.ORJSONRenderer` or
+`rest_framework.renderers.UnicodeJSONRenderer` for DRF < 3.0,specify it in your django
 settings file.
 
 .. code-block:: python
 
     # ...
     JSON_CAMEL_CASE = {
-        'RENDERER_CLASS': 'rest_framework.renderers.UnicodeJSONRenderer'
+        'RENDERER_CLASS': 'drf_orjson_renderer.renderers.ORJSONRenderer'
     }
     # ...
 

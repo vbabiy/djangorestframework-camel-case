@@ -17,6 +17,7 @@ IMPORT_STRINGS = ("RENDERER_CLASS", "PARSER_CLASS")
 VALID_SETTINGS = {
     "RENDERER_CLASS": (
         "rest_framework.renderers.JSONRenderer",
+	"drf_orjson_renderer.renderers.ORJSONRenderer",
         "rest_framework.renderers.UnicodeJSONRenderer",
     ),
     "PARSER_CLASS": ("rest_framework.parsers.JSONParser",),
