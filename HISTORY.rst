@@ -2,7 +2,12 @@
 
 History
 =======
-1.4.1 (2023-02-09)
+
+1.4.2 (2023-02-13)
+------------------
+- Middleware to underscorize query params #123
+
+1.4.1 (2023-02-13)
 ------------------
 - ORJSONRenderer #124
 
