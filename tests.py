@@ -1,16 +1,17 @@
 from copy import deepcopy
-from unittest import TestCase
+from unittest import TestCase, mock
 
 from django.conf import settings
 from django.http import QueryDict
 from django.utils.functional import lazy
-
+from django.test.client import RequestFactory
 from rest_framework.utils.serializer_helpers import ReturnDict
 
 from djangorestframework_camel_case.util import camelize, underscoreize
 
 settings.configure()
 
+from djangorestframework_camel_case.middleware import CamelCaseMiddleWare
 
 class ImportTest(TestCase):
     def test_import_all(self):
@@ -20,10 +21,12 @@ class ImportTest(TestCase):
         from djangorestframework_camel_case import parser
         from djangorestframework_camel_case import render
         from djangorestframework_camel_case import settings
+        from djangorestframework_camel_case import middleware
 
         assert parser
         assert render
         assert settings
+        assert middleware
 
 
 class UnderscoreToCamelTestCase(TestCase):
@@ -254,3 +257,53 @@ class CamelToUnderscoreQueryDictTestCase(TestCase):
         }
         output_query.update(output)
         self.assertEqual(underscoreize(query_dict), output_query)
+
+class CamelCaseMiddleWareTestCase(TestCase):
+    def test_camel_case_to_underscore_query_params(self):
+        get_response_mock = mock.MagicMock()
+        middleware = CamelCaseMiddleWare(get_response_mock)
+        query_dict = QueryDict("testList=1&testList=2", mutable=True)
+        data = {
+            "twoWord": "1",
+            "longKeyWithManyUnderscores": "2",
+            "only1Key": "3",
+            "onlyOneLetterA": "4",
+            "bOnlyOneLetter": "5",
+            "onlyCLetter": "6",
+            "mix123123aAndLetters": "7",
+            "mix123123aaAndLettersComplex": "8",
+            "wordWITHCaps": "9",
+            "key10": "10",
+            "anotherKey1": "11",
+            "anotherKey10": "12",
+            "optionS1": "13",
+            "optionS10": "14",
+            "UPPERCASE": "15",
+        }
+        query_dict.update(data)
+
+        output_query = QueryDict("test_list=1&test_list=2", mutable=True)
+
+        output = {
+            "two_word": "1",
+            "long_key_with_many_underscores": "2",
+            "only_1_key": "3",
+            "only_one_letter_a": "4",
+            "b_only_one_letter": "5",
+            "only_c_letter": "6",
+            "mix_123123a_and_letters": "7",
+            "mix_123123aa_and_letters_complex": "8",
+            "word_with_caps": "9",
+            "key_10": "10",
+            "another_key_1": "11",
+            "another_key_10": "12",
+            "option_s_1": "13",
+            "option_s_10": "14",
+            "uppercase": "15",
+        }
+        output_query.update(output)
+        request = RequestFactory().get("/", query_dict)
+
+        middleware(request)
+        (args, kwargs) = get_response_mock.call_args
+        self.assertEqual(args[0].GET, output_query)
