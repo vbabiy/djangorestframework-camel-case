@@ -30,7 +30,7 @@ setup(
     packages=["djangorestframework_camel_case"],
     package_dir={"djangorestframework_camel_case": "djangorestframework_camel_case"},
     include_package_data=True,
-    python_requires=">=3.5",
+    python_requires=">=3.6",
     install_requires=[],
     license="BSD",
     zip_safe=False,
