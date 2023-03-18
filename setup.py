@@ -3,6 +3,7 @@
 
 import os
 import sys
+from pathlib import Path
 
 
 try:
@@ -18,6 +19,10 @@ readme = open("README.rst").read()
 history = open("HISTORY.rst").read().replace(".. :changelog:", "")
 import djangorestframework_camel_case
 
+def extract_requires():
+    with Path('requirements.txt').open() as reqs:
+        return [req.strip() for req in reqs if not req.startswith(("#", "--", "-r")) and req.strip()]
+
 setup(
     name="djangorestframework-camel-case",
     version=djangorestframework_camel_case.__version__,
@@ -31,7 +36,7 @@ setup(
     package_dir={"djangorestframework_camel_case": "djangorestframework_camel_case"},
     include_package_data=True,
     python_requires=">=3.6",
-    install_requires=[],
+    install_requires=extract_requires(),
     license="BSD",
     zip_safe=False,
     keywords="djangorestframework_camel_case",
