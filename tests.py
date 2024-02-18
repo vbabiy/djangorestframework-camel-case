@@ -108,6 +108,8 @@ class CamelToUnderscoreTestCase(TestCase):
             "optionS1": 13,
             "optionS10": 14,
             "UPPERCASE": 15,
+            "PascalCase": 16,
+            "Pascal10Case": 17,
         }
         output = {
             "two_word": 1,
@@ -125,6 +127,8 @@ class CamelToUnderscoreTestCase(TestCase):
             "option_s_1": 13,
             "option_s_10": 14,
             "uppercase": 15,
+            "pascal_case": 16,
+            "pascal_10_case": 17,
         }
         self.assertEqual(underscoreize(data), output)
 
@@ -239,6 +243,8 @@ class CamelToUnderscoreQueryDictTestCase(TestCase):
             "optionS1": 13,
             "optionS10": 14,
             "UPPERCASE": 15,
+            "PascalCase": 16,
+            "Pascal10Case": 17,
         }
         query_dict.update(data)
 
@@ -260,6 +266,8 @@ class CamelToUnderscoreQueryDictTestCase(TestCase):
             "option_s_1": 13,
             "option_s_10": 14,
             "uppercase": 15,
+            "pascal_case": 16,
+            "pascal_10_case": 17,
         }
         output_query.update(output)
         self.assertEqual(underscoreize(query_dict), output_query)
@@ -285,6 +293,8 @@ class CamelCaseMiddleWareTestCase(TestCase):
             "optionS1": "13",
             "optionS10": "14",
             "UPPERCASE": "15",
+            "PascalCase": "16",
+            "Pascal10Case": "17",
         }
         query_dict.update(data)
 
@@ -306,6 +316,8 @@ class CamelCaseMiddleWareTestCase(TestCase):
             "option_s_1": "13",
             "option_s_10": "14",
             "uppercase": "15",
+            "pascal_case": "16",
+            "pascal_10_case": "17",
         }
         output_query.update(output)
         request = RequestFactory().get("/", query_dict)

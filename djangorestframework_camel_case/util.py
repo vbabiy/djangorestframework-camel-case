@@ -63,7 +63,7 @@ def get_underscoreize_re(options):
 
 def camel_to_underscore(name, **options):
     underscoreize_re = get_underscoreize_re(options)
-    return underscoreize_re.sub(r"\1_\2", name).lower()
+    return underscoreize_re.sub(r"\1_\2", name).lower().lstrip("_")
 
 
 def _get_iterable(data):
