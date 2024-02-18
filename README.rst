@@ -60,7 +60,9 @@ By default the package uses `rest_framework.renderers.JSONRenderer`. If you want
 to use another renderer, the two possible are:
 
 `drf_orjson_renderer.renderers.ORJSONRenderer` or
+`drf_ujson.renderers.UJSONRenderer` or
 `rest_framework.renderers.UnicodeJSONRenderer` for DRF < 3.0,specify it in your django
+settings file.
 settings file.
 
 .. code-block:: python
