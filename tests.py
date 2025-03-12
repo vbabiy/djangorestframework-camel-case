@@ -1,5 +1,5 @@
 from copy import deepcopy
-from unittest import TestCase, mock
+from unittest import TestCase, main, mock
 
 from django.conf import settings
 from django.http import QueryDict
@@ -325,3 +325,7 @@ class CamelCaseMiddleWareTestCase(TestCase):
         middleware(request)
         (args, kwargs) = get_response_mock.call_args
         self.assertEqual(args[0].GET, output_query)
+
+
+if __name__ == "__main__":
+    main()
