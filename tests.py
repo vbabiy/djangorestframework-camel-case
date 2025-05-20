@@ -89,6 +89,46 @@ class UnderscoreToCamelTestCase(TestCase):
         }
         self.assertEqual(camelize(data, ignore_fields=ignore_fields, ignore_keys=ignore_keys), output)
 
+    def test_camelize_with_ignore_shallow_keys(self):
+        ignore_shallow_keys = ("shallow_ignored", "another_shallow")
+        data = {
+            "shallow_ignored": {
+                "first_level_stays": {
+                    "second_level_gets_camelized": 1
+                }
+            },
+            "another_shallow": {
+                "also_stays": {
+                    "nested_gets_camelized": 2,
+                    "another_nested": {
+                        "deeply_nested_also_camelized": 3
+                    }
+                }
+            },
+            "normal_key": {
+                "gets_camelized": 4
+            }
+        }
+        output = {
+            "shallowIgnored": {
+                "first_level_stays": {
+                    "secondLevelGetsCamelized": 1
+                }
+            },
+            "anotherShallow": {
+                "also_stays": {
+                    "nestedGetsCamelized": 2,
+                    "anotherNested": {
+                        "deeplyNestedAlsoCamelized": 3
+                    }
+                }
+            },
+            "normalKey": {
+                "getsCamelized": 4
+            }
+        }
+        self.assertEqual(camelize(data, ignore_shallow_keys=ignore_shallow_keys), output)
+
 
 class CamelToUnderscoreTestCase(TestCase):
     def test_camel_to_under_keys(self):
