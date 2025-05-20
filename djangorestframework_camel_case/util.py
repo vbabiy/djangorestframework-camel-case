@@ -46,7 +46,6 @@ def camelize(data, parent_key=None, **options):
                 result = camelize(value, parent_key=key, **options)
             else:
                 result = value
-            print(f"key: {key}, new key: {new_key}, parent key: {parent_key}")
             if (
                 key in ignore_keys
                 or new_key in ignore_keys
