@@ -20,10 +20,11 @@ def underscore_to_camel(match):
         return group[1].upper()
 
 
-def camelize(data, **options):
+def camelize(data, parent_key=None, **options):
     # Handle lazy translated strings.
     ignore_fields = options.get("ignore_fields") or ()
     ignore_keys = options.get("ignore_keys") or ()
+    ignore_shallow_keys = options.get("ignore_shallow_keys") or ()
     if isinstance(data, Promise):
         data = force_str(data)
     if isinstance(data, dict):
@@ -39,11 +40,18 @@ def camelize(data, **options):
             else:
                 new_key = key
 
-            if key not in ignore_fields and new_key not in ignore_fields:
-                result = camelize(value, **options)
+            if parent_key in ignore_shallow_keys or new_key in ignore_shallow_keys:
+                result = camelize(value, parent_key=key, **options)
+            elif key not in ignore_fields and new_key not in ignore_fields:
+                result = camelize(value, parent_key=key, **options)
             else:
                 result = value
-            if key in ignore_keys or new_key in ignore_keys:
+            print(f"key: {key}, new key: {new_key}, parent key: {parent_key}")
+            if (
+                key in ignore_keys
+                or new_key in ignore_keys
+                or parent_key in ignore_shallow_keys
+            ):
                 new_dict[key] = result
             else:
                 new_dict[new_key] = result
