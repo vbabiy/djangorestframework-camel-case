@@ -1,5 +1,4 @@
 import re
-from collections import OrderedDict
 
 from django.core.files import File
 from django.http import QueryDict
@@ -30,7 +29,7 @@ def camelize(data, **options):
         if isinstance(data, ReturnDict):
             new_dict = ReturnDict(serializer=data.serializer)
         else:
-            new_dict = OrderedDict()
+            new_dict = {}
         for key, value in data.items():
             if isinstance(key, Promise):
                 key = force_str(key)
