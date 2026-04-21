@@ -198,6 +198,26 @@ The `unchanging_key` field would not be renamed:
 
     {"unchanging_key": {"changeMe": 1}}
 
+You can also ignore only one level in a nested object using `ignore_shallow_keys`:
+
+.. code-block:: python
+
+    REST_FRAMEWORK = {
+        # ...
+        "JSON_UNDERSCOREIZE": {
+            # ...
+            "ignore_shallow_keys": ("nested_object",),
+            # ...
+        },
+        # ...
+    }
+
+The `nested_object` field's immediate children would not be renamed, but deeper levels would still be camelized:
+
+.. code-block:: python
+
+    {"nestedObject": {"first_level": {"secondLevel": 1}}}
+
 ignore_keys and ignore_fields can be applied to the same key if required.
 
 =============
