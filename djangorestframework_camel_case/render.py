@@ -1,25 +1,20 @@
-# -*- coding: utf-8 -*-
-import re
-from collections import OrderedDict
-from rest_framework.renderers import JSONRenderer
+from rest_framework.renderers import BrowsableAPIRenderer
 
-def underscoreToCamel(match):
-    return match.group()[0] + match.group()[2].upper()
+from djangorestframework_camel_case.settings import api_settings
+from djangorestframework_camel_case.util import camelize
 
-def camelize(data):
-    if isinstance(data, dict):
-        new_dict = OrderedDict()
-        for key, value in data.items():
-            new_key = re.sub(r"[a-z]_[a-z]", underscoreToCamel, key)
-            new_dict[new_key] = camelize(value)
-        return new_dict
-    if isinstance(data, (list, tuple)):
-        for i in range(len(data)):
-            data[i] = camelize(data[i])
-        return data
-    return data
 
-class CamelCaseJSONRenderer(JSONRenderer):
+class CamelCaseJSONRenderer(api_settings.RENDERER_CLASS):
+    json_underscoreize = api_settings.JSON_UNDERSCOREIZE
 
     def render(self, data, *args, **kwargs):
-        return super(CamelCaseJSONRenderer, self).render(camelize(data), *args, **kwargs)
+        return super().render(
+            camelize(data, **self.json_underscoreize), *args, **kwargs
+        )
+
+
+class CamelCaseBrowsableAPIRenderer(BrowsableAPIRenderer):
+    def render(self, data, *args, **kwargs):
+        return super(CamelCaseBrowsableAPIRenderer, self).render(
+            camelize(data, **api_settings.JSON_UNDERSCOREIZE), *args, **kwargs
+        )

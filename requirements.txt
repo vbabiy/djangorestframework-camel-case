@@ -1,1 +1,2 @@
-djangorestframework>=2.0.0
+djangorestframework>=3.13.0
+django>=3.2

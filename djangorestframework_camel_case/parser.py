@@ -1,37 +1,72 @@
-# -*- coding: utf-8 -*-
-from rest_framework.parsers import JSONParser, ParseError, six
-from django.conf import settings
-import re
 import json
 
-first_cap_re = re.compile('(.)([A-Z][a-z]+)')
-all_cap_re = re.compile('([a-z0-9])([A-Z])')
+from django.conf import settings
+from django.http.multipartparser import (
+    MultiPartParser as DjangoMultiPartParser,
+    MultiPartParserError,
+)
+from rest_framework.exceptions import ParseError
+from rest_framework.parsers import MultiPartParser, DataAndFiles
+from rest_framework.parsers import FormParser
 
-def camel_to_underscore(name):
-    s1 = first_cap_re.sub(r'\1_\2', name)
-    return all_cap_re.sub(r'\1_\2', s1).lower()
+from djangorestframework_camel_case.settings import api_settings
+from djangorestframework_camel_case.util import underscoreize
 
-def underscoreize(data):
-    if isinstance(data, dict):
-        new_dict = {}
-        for key, value in data.items():
-            new_key = camel_to_underscore(key)
-            new_dict[new_key] = underscoreize(value)
-        return new_dict
-    if isinstance(data, (list, tuple)):
-        for i in range(len(data)):
-            data[i] = underscoreize(data[i])
-        return data
-    return data
 
-class CamelCaseJSONParser(JSONParser):
+class CamelCaseJSONParser(api_settings.PARSER_CLASS):
+    json_underscoreize = api_settings.JSON_UNDERSCOREIZE
 
     def parse(self, stream, media_type=None, parser_context=None):
         parser_context = parser_context or {}
-        encoding = parser_context.get('encoding', settings.DEFAULT_CHARSET)
+        encoding = parser_context.get("encoding", settings.DEFAULT_CHARSET)
 
         try:
             data = stream.read().decode(encoding)
-            return underscoreize(json.loads(data))
+            return underscoreize(json.loads(data), **self.json_underscoreize)
         except ValueError as exc:
-            raise ParseError('JSON parse error - %s' % six.text_type(exc))
+            raise ParseError("JSON parse error - %s" % str(exc))
+
+
+class CamelCaseFormParser(FormParser):
+    """
+    Parser for form data.
+    """
+
+    def parse(self, stream, media_type=None, parser_context=None):
+        return underscoreize(
+            super().parse(stream, media_type, parser_context),
+            **api_settings.JSON_UNDERSCOREIZE,
+        )
+
+
+class CamelCaseMultiPartParser(MultiPartParser):
+    """
+    Parser for multipart form data, which may include file data.
+    """
+
+    media_type = "multipart/form-data"
+
+    def parse(self, stream, media_type=None, parser_context=None):
+        """
+        Parses the incoming bytestream as a multipart encoded form,
+        and returns a DataAndFiles object.
+
+        `.data` will be a `QueryDict` containing all the form parameters.
+        `.files` will be a `QueryDict` containing all the form files.
+        """
+        parser_context = parser_context or {}
+        request = parser_context["request"]
+        encoding = parser_context.get("encoding", settings.DEFAULT_CHARSET)
+        meta = request.META.copy()
+        meta["CONTENT_TYPE"] = media_type
+        upload_handlers = request.upload_handlers
+
+        try:
+            parser = DjangoMultiPartParser(meta, stream, upload_handlers, encoding)
+            data, files = parser.parse()
+            return DataAndFiles(
+                underscoreize(data, **api_settings.JSON_UNDERSCOREIZE),
+                underscoreize(files, **api_settings.JSON_UNDERSCOREIZE),
+            )
+        except MultiPartParserError as exc:
+            raise ParseError("Multipart form parse error - %s" % str(exc))
