@@ -1,5 +1,6 @@
 import re
 from collections import OrderedDict
+from collections.abc import Iterable
 
 from django.core.files import File
 from django.http import QueryDict
@@ -10,6 +11,11 @@ from django.utils.functional import Promise
 from rest_framework.utils.serializer_helpers import ReturnDict
 
 camelize_re = re.compile(r"[a-z0-9]?_[a-z0-9]")
+
+underscoreize_re_map = {
+    True: re.compile(r"([a-z0-9]|[A-Z]?(?=[A-Z](?=[a-z])))([A-Z])"),
+    False: re.compile(r"([a-z0-9]|[A-Z]?(?=[A-Z0-9](?=[a-z0-9]|(?<![A-Z])$)))([A-Z]|(?<=[a-z])[0-9](?=[0-9A-Z]|$)|(?<=[A-Z])[0-9](?=[0-9]|$))")
+}
 
 
 def underscore_to_camel(match):
@@ -48,21 +54,13 @@ def camelize(data, **options):
             else:
                 new_dict[new_key] = result
         return new_dict
-    if is_iterable(data) and not isinstance(data, str):
+    if isinstance(data, Iterable) and not isinstance(data, str):
         return [camelize(item, **options) for item in data]
     return data
 
 
-def get_underscoreize_re(options):
-    if options.get("no_underscore_before_number"):
-        pattern = r"([a-z0-9]|[A-Z]?(?=[A-Z](?=[a-z])))([A-Z])"
-    else:
-        pattern = r"([a-z0-9]|[A-Z]?(?=[A-Z0-9](?=[a-z0-9]|(?<![A-Z])$)))([A-Z]|(?<=[a-z])[0-9](?=[0-9A-Z]|$)|(?<=[A-Z])[0-9](?=[0-9]|$))"
-    return re.compile(pattern)
-
-
 def camel_to_underscore(name, **options):
-    underscoreize_re = get_underscoreize_re(options)
+    underscoreize_re = underscoreize_re_map[options.get("no_underscore_before_number", False)]
     return underscoreize_re.sub(r"\1_\2", name).lower().lstrip("_")
 
 
@@ -104,16 +102,7 @@ def underscoreize(data, **options):
                 new_query.setlist(key, value)
             return new_query
         return new_dict
-    if is_iterable(data) and not isinstance(data, (str, File)):
+    if isinstance(data, Iterable) and not isinstance(data, (str, File)):
         return [underscoreize(item, **options) for item in data]
 
     return data
-
-
-def is_iterable(obj):
-    try:
-        iter(obj)
-    except TypeError:
-        return False
-    else:
-        return True
