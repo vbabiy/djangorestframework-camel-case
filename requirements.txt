@@ -1,2 +1,2 @@
-djangorestframework>=3.13.0
+djangorestframework>=3.16.1
 django>=3.2
