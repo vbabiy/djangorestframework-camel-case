@@ -21,7 +21,10 @@ VALID_SETTINGS = {
         "drf_ujson.renderers.UJSONRenderer",
         "rest_framework.renderers.UnicodeJSONRenderer",
     ),
-    "PARSER_CLASS": ("rest_framework.parsers.JSONParser",),
+    "PARSER_CLASS": (
+        "rest_framework.parsers.JSONParser",
+        "drf_orjson_renderer.parsers.ORJSONParser",
+    ),
 }
 
 
