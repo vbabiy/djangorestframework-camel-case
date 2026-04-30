@@ -99,7 +99,7 @@ By default, the package uses the first case. To use the second case, specify it 
 
 .. code-block:: python
 
-    REST_FRAMEWORK = {
+    JSON_CAMEL_CASE = {
         # ...
         'JSON_UNDERSCOREIZE': {
             'no_underscore_before_number': True,
@@ -144,7 +144,7 @@ However, if you set in your settings:
 
 .. code-block:: python
 
-    REST_FRAMEWORK = {
+    JSON_CAMEL_CASE = {
         # ...
         "JSON_UNDERSCOREIZE": {
             # ...
@@ -182,7 +182,7 @@ However, if you set in your settings:
 
 .. code-block:: python
 
-    REST_FRAMEWORK = {
+    JSON_CAMEL_CASE = {
         # ...
         "JSON_UNDERSCOREIZE": {
             # ...
