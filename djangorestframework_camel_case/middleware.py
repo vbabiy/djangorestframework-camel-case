@@ -7,10 +7,11 @@ class CamelCaseMiddleWare:
         self.get_response = get_response
 
     def __call__(self, request):
-        request.GET = underscoreize(
-            request.GET,
-            **api_settings.JSON_UNDERSCOREIZE
-        )
+        if api_settings.JSON_UNDERSCOREIZE.get('normalize_inputs', False):
+            request.GET = underscoreize(
+                request.GET,
+                **api_settings.JSON_UNDERSCOREIZE
+            )
 
         response = self.get_response(request)
         return response

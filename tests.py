@@ -89,6 +89,50 @@ class UnderscoreToCamelTestCase(TestCase):
         }
         self.assertEqual(camelize(data, ignore_fields=ignore_fields, ignore_keys=ignore_keys), output)
 
+    def test_preserve_underscore_keys(self):
+        data = {
+            "two_word": 1,
+            "long_key_with_many_underscores": 2,
+            "only_1_key": 3,
+            "only_one_letter_a": 4,
+            "b_only_one_letter": 5,
+            "only_c_letter": 6,
+            "mix_123123a_and_letters": 7,
+            "mix_123123aa_and_letters_complex": 8,
+            "no_underscore_before123": 9,
+            "snake_first": {"camelSecond": 1},
+            "snake_first_2": {"snake_second": 1},
+            "camelFirst": {"snake_second": 1},
+        }
+        expected_output = {
+            "twoWord": 1,
+            "two_word": 1,
+            "longKeyWithManyUnderscores": 2,
+            "long_key_with_many_underscores": 2,
+            "only1Key": 3,
+            "only_1_key": 3,
+            "onlyOneLetterA": 4,
+            "only_one_letter_a": 4,
+            "bOnlyOneLetter": 5,
+            "b_only_one_letter": 5,
+            "onlyCLetter": 6,
+            "only_c_letter": 6,
+            "mix123123aAndLetters": 7,
+            "mix_123123a_and_letters": 7,
+            "mix123123aaAndLettersComplex": 8,
+            "mix_123123aa_and_letters_complex": 8,
+            "noUnderscoreBefore123": 9,
+            "no_underscore_before123": 9,
+            "snakeFirst": {"camelSecond": 1},
+            "snake_first": {"camelSecond": 1},
+            "snakeFirst2": {"snakeSecond": 1, "snake_second": 1},
+            "snake_first_2": {"snakeSecond": 1, "snake_second": 1},
+            "camelFirst": {"snakeSecond": 1, "snake_second": 1},
+        }
+        output = camelize(data, preserve_underscore_keys=True)
+
+        self.assertEqual(expected_output, output)
+
 
 class CamelToUnderscoreTestCase(TestCase):
     def test_camel_to_under_keys(self):

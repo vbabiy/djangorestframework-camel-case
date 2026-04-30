@@ -8,7 +8,7 @@ Django REST Framework JSON CamelCase
 .. image:: https://badge.fury.io/py/djangorestframework-camel-case.svg
     :target: https://badge.fury.io/py/djangorestframework-camel-case
 
-Camel case JSON support for Django REST framework.
+Camel case JSON support for Django REST framework.  This affects input and output by default.
 
 ============
 Installation
@@ -18,7 +18,7 @@ At the command line::
 
     $ pip install djangorestframework-camel-case
 
-Add the render and parser to your django settings file.
+Add the render and parser to your django settings file as needed.  If you only want responses to be converted to camelCase, you only need the renderer classes, not the parsers (but check the settings).
 
 .. code-block:: python
 
@@ -61,8 +61,7 @@ to use another renderer, the two possible are:
 
 `drf_orjson_renderer.renderers.ORJSONRenderer` or
 `drf_ujson.renderers.UJSONRenderer` or
-`rest_framework.renderers.UnicodeJSONRenderer` for DRF < 3.0,specify it in your django
-settings file.
+`rest_framework.renderers.UnicodeJSONRenderer` for DRF < 3.0, specify it in your django
 settings file.
 
 .. code-block:: python
@@ -77,8 +76,28 @@ settings file.
 Underscoreize Options
 =====================
 
+Normalize Inputs
+----------------
 
-**No Underscore Before Number**
+By default, the middleware normalizes any incoming query parameters and other inputs from 
+camelCase to snake_case so everything passes through the same logic.  If you do not want this,
+disable the `normalize_inputs` setting:
+
+.. code-block:: python
+
+    REST_FRAMEWORK = {
+        # ...
+        "JSON_UNDERSCOREIZE": {
+            # ...
+            "normalize_inputs": False,
+            # ...
+        },
+        # ...
+    }
+
+
+No Underscore Before Number
+---------------------------
 
 
 As raised in `this comment <https://github.com/krasa/StringManipulation/issues/8#issuecomment-121203018>`_
@@ -122,9 +141,10 @@ Alternatively, you can change this behavior on a class level by setting `json_un
         serializer_class = MySerializer
         parser_classes = (NoUnderscoreBeforeNumberCamelCaseJSONParser,)
 
-=============
+
 Ignore Fields
-=============
+-------------
+
 
 You can also specify fields which should not have their data changed.
 The specified field(s) would still have their name change, but there would be no recursion.
@@ -159,10 +179,11 @@ The `my_key` field would not have its data changed:
 .. code-block:: python
 
     {"myKey": {"do_not_change": 1}}
+    
 
-===========
 Ignore Keys
-===========
+-----------
+
 
 You can also specify keys which should *not* be renamed.
 The specified field(s) would still change (even recursively).
@@ -199,6 +220,67 @@ The `unchanging_key` field would not be renamed:
     {"unchanging_key": {"changeMe": 1}}
 
 ignore_keys and ignore_fields can be applied to the same key if required.
+
+
+Preserve Underscore Keys
+------------------------
+
+
+If you need to preserve the underscore keys alongside the camel case versions for compatibility or other reasons, specify that option:
+
+.. code-block:: python
+
+    REST_FRAMEWORK = {
+        # ...
+        "JSON_UNDERSCOREIZE": {
+            # ...
+            "preserve_underscore_keys": True,
+            # ...
+        },
+        # ...
+    }
+    
+For example:
+
+.. code-block:: python
+
+    data = {"original_key": {"another_original_key": 1}}
+
+Would become:
+
+.. code-block:: python
+
+    {
+        "originalKey": {
+            "anotherOriginalKey": 1
+        },
+        "original_key": {
+            "another_original_key": 1
+        }
+    }
+
+
+Ignore Request Paths
+--------------------
+
+Entire requests can be ignored by the JSON renderer.
+
+.. code-block:: python
+
+    REST_FRAMEWORK = {
+        # ...
+        "JSON_UNDERSCOREIZE": {
+            # ...
+            "ignore_paths": [
+                '/api/v1/my_custom_endpoint/'
+            ],
+            # ...
+        },
+        # ...
+    }
+    
+With this option set, `/api/v1/my_custom_endpoint/` would not pass through the custom renderer.
+
 
 =============
 Running Tests

@@ -24,6 +24,7 @@ def camelize(data, **options):
     # Handle lazy translated strings.
     ignore_fields = options.get("ignore_fields") or ()
     ignore_keys = options.get("ignore_keys") or ()
+    preserve_underscore_keys = options.get("preserve_underscore_keys", False)
     if isinstance(data, Promise):
         data = force_str(data)
     if isinstance(data, dict):
@@ -47,6 +48,8 @@ def camelize(data, **options):
                 new_dict[key] = result
             else:
                 new_dict[new_key] = result
+            if preserve_underscore_keys:
+                new_dict[key] = result
         return new_dict
     if is_iterable(data) and not isinstance(data, str):
         return [camelize(item, **options) for item in data]
