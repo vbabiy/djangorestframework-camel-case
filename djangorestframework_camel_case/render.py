@@ -14,7 +14,9 @@ class CamelCaseJSONRenderer(api_settings.RENDERER_CLASS):
 
 
 class CamelCaseBrowsableAPIRenderer(BrowsableAPIRenderer):
+    json_underscoreize = api_settings.JSON_UNDERSCOREIZE
+
     def render(self, data, *args, **kwargs):
         return super(CamelCaseBrowsableAPIRenderer, self).render(
-            camelize(data, **api_settings.JSON_UNDERSCOREIZE), *args, **kwargs
+            camelize(data, **self.json_underscoreize), *args, **kwargs
         )
