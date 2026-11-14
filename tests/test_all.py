@@ -1,20 +1,21 @@
 from copy import deepcopy
-from unittest import TestCase, mock
+from unittest import mock
 
-from django.conf import settings
 from django.http import QueryDict
+from django.test import SimpleTestCase
 from django.test.client import RequestFactory
 from django.utils.functional import lazy
 from rest_framework.utils.serializer_helpers import ReturnDict
 
-from djangorestframework_camel_case.util import camelize, underscoreize
-
-settings.configure()
-
 from djangorestframework_camel_case.middleware import CamelCaseMiddleWare
+from djangorestframework_camel_case.parser import CamelCaseJSONParser
+from djangorestframework_camel_case.render import CamelCaseJSONRenderer
+from djangorestframework_camel_case.util import camelize, underscoreize
+from tests.parser import SimpleCustomParser
+from tests.render import SimpleCustomRenderer
 
 
-class ImportTest(TestCase):
+class ImportTest(SimpleTestCase):
     def test_import_all(self):
         """
         A quick test that just imports everything, should crash in case any Django or DRF modules change
@@ -27,7 +28,7 @@ class ImportTest(TestCase):
         assert middleware
 
 
-class UnderscoreToCamelTestCase(TestCase):
+class UnderscoreToCamelTestCase(SimpleTestCase):
     def test_under_to_camel_keys(self):
         data = {
             "two_word": 1,
@@ -88,7 +89,7 @@ class UnderscoreToCamelTestCase(TestCase):
         self.assertEqual(camelize(data, ignore_fields=ignore_fields, ignore_keys=ignore_keys), output)
 
 
-class CamelToUnderscoreTestCase(TestCase):
+class CamelToUnderscoreTestCase(SimpleTestCase):
     def test_camel_to_under_keys(self):
         data = {
             "twoWord": 1,
@@ -166,7 +167,7 @@ class CamelToUnderscoreTestCase(TestCase):
         self.assertEqual(underscoreize(data, ignore_fields=ignore_fields, ignore_keys=ignore_keys), output)
 
 
-class NonStringKeyTest(TestCase):
+class NonStringKeyTest(SimpleTestCase):
     def test_non_string_key(self):
         data = {1: "test"}
         self.assertEqual(underscoreize(camelize(data)), data)
@@ -179,7 +180,7 @@ def return_string(text):
 lazy_func = lazy(return_string, str)
 
 
-class PromiseStringTest(TestCase):
+class PromiseStringTest(SimpleTestCase):
     def test_promise_strings(self):
         data = {lazy_func("test_key"): lazy_func("test_value value")}
         camelized = camelize(data)
@@ -188,7 +189,7 @@ class PromiseStringTest(TestCase):
         self.assertEqual(result, {"test_key": "test_value value"})
 
 
-class ReturnDictTest(TestCase):
+class ReturnDictTest(SimpleTestCase):
     def test_return_dict(self):
         data = ReturnDict({"id": 3, "value": "val"}, serializer=object())
         camelized = camelize(data)
@@ -196,13 +197,13 @@ class ReturnDictTest(TestCase):
         self.assertEqual(data.serializer, camelized.serializer)
 
 
-class NumberToCamelTestCase(TestCase):
+class NumberToCamelTestCase(SimpleTestCase):
     def test_dict_with_numbers_as_keys(self):
         data = {1: "test", "a": "abc"}
         self.assertEqual(camelize(data), data)
 
 
-class GeneratorAsInputTestCase(TestCase):
+class GeneratorAsInputTestCase(SimpleTestCase):
     def _underscore_generator(self):
         yield {"simple_is_better": "than complex"}
         yield {"that_is": "correct"}
@@ -222,7 +223,7 @@ class GeneratorAsInputTestCase(TestCase):
         self.assertEqual(underscoreize(data), output)
 
 
-class CamelToUnderscoreQueryDictTestCase(TestCase):
+class CamelToUnderscoreQueryDictTestCase(SimpleTestCase):
     def test_camel_to_under_keys(self):
         query_dict = QueryDict("testList=1&testList=2", mutable=True)
         data = {
@@ -271,7 +272,7 @@ class CamelToUnderscoreQueryDictTestCase(TestCase):
         self.assertEqual(underscoreize(query_dict), output_query)
 
 
-class CamelCaseMiddleWareTestCase(TestCase):
+class CamelCaseMiddleWareTestCase(SimpleTestCase):
     def test_camel_case_to_underscore_query_params(self):
         get_response_mock = mock.MagicMock()
         middleware = CamelCaseMiddleWare(get_response_mock)
@@ -324,3 +325,11 @@ class CamelCaseMiddleWareTestCase(TestCase):
         middleware(request)
         (args, _) = get_response_mock.call_args
         self.assertEqual(args[0].GET, output_query)
+
+
+def test_custom_renderer_has_correct_parent_class() -> None:
+    assert issubclass(CamelCaseJSONRenderer, SimpleCustomRenderer)
+
+
+def test_custom_parser_has_correct_parent_class() -> None:
+    assert issubclass(CamelCaseJSONParser, SimpleCustomParser)
